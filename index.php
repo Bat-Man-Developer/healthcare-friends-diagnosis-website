@@ -1,81 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>WORDBRAIN-S33</title>
-</head>
-<body>
-    <div class="container">
-        <h1>WORDBRAIN-S33 LLM</h1>
-        <p style="color: red; font-weight: bold; text-align: center;">Note: Python code wont run on a free server</p>
-        <div class="chat-container" id="chatContainer"></div>
-        <div class="input-container">
-            <input type="text" id="userInput" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send</button>
+<?php
+include('layouts/header.php');
+?>
+  <body>
+    <!--------- Dashboard-Page ------------>
+    <section class="dashboard">
+      <div class="dashboardcontainer" id="dashboardcontainer">
+        <div class="text-center mt-3 pt-5 col-lg-6 col-md-12 col-sm-12">
+          <p class="text-center" style="color: green"><?php if(isset($_GET['registermessage'])){ echo $_GET['registermessage']; }?></p>
+          <p class="text-center" style="color: green"><?php if(isset($_GET['loginmessage'])){ echo $_GET['loginmessage']; }?></p>
+          <p class="text-center" style="color: red"><?php if(isset($_GET['errormessage'])){ echo $_GET['errormessage']; }?></p>
+          <h3>AI-DEMO HOME</h3>
+          <hr class="mx-auto">
+          <div class="dashboardadmininfo" id="dashboardadmininfo">
+          </div>
+          <div class="dashboardinfo" id="dashboardinfo">
+            <div class="admindashboardcontainer">
+              <div class="adminidscontainer">
+                <div class="adminidstable">
+                  <h1 class="adminidstitle"></h1>
+                  <div class="adminIdsBtnNav">
+                    <a class="btn" href="index.php">Home</a>
+                    <a class="btn" href="model_performance.php">Model Performance</a>
+                    <a class="btn" href="index.php">Refresh</a>
+                  </div>
+                </div><br><br>
+                <h1 style="color: blue;">AI-DEMO.</h1><br><br><br><br>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-
-    <script>
-        const chatContainer = document.getElementById('chatContainer');
-        const userInput = document.getElementById('userInput');
-
-        async function sendMessage() {
-            const message = userInput.value.trim();
-            if (!message) return;
-
-            addMessage(message, 'user-message');
-            userInput.value = '';
-            userInput.focus();
-
-            const loadingDiv = addMessage('Thinking', 'ai-message loading');
-
-            try {
-                const response = await fetch('api.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ input: message })
-                });
-
-                const data = await response.json();
-                loadingDiv.remove();
-
-                if (data.status === 'success') {
-                    addMessage(data.response, 'ai-message');
-                } else {
-                    addMessage('Error: Unable to generate response', 'ai-message');
-                }
-            } catch (error) {
-                loadingDiv.remove();
-                addMessage('Error: Unable to connect to the server', 'ai-message');
-            }
-        }
-
-        function addMessage(text, className) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${className}`;
-            messageDiv.textContent = text;
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            return messageDiv;
-        }
-
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
-        // Add subtle parallax effect on mouse move
-        document.addEventListener('mousemove', (e) => {
-            const container = document.querySelector('.container');
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 100;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 100;
-            container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
-    </script>
-</body>
+      </div>
+    </section><br><br><br><br><br><br><br><br><br>
+  </body>
 </html>

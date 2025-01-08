@@ -9,7 +9,7 @@ include('layouts/header.php');
           <p class="text-center" style="color: green"><?php if(isset($_GET['registermessage'])){ echo $_GET['registermessage']; }?></p>
           <p class="text-center" style="color: green"><?php if(isset($_GET['loginmessage'])){ echo $_GET['loginmessage']; }?></p>
           <p class="text-center" style="color: red"><?php if(isset($_GET['errormessage'])){ echo $_GET['errormessage']; }?></p>
-          <h3>AI-DEMO HOME</h3>
+          <h3>HealthCare Friends HOME</h3>
           <hr class="mx-auto">
           <div class="dashboardadmininfo" id="dashboardadmininfo">
           </div>

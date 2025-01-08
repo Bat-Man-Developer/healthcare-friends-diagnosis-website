@@ -1,6 +1,6 @@
 <?php
   include('layouts/header.php');
-  include('server/delete_model_plots.php');
+  include('server/delete_model_plots.php'); 
 ?>
   <body>
     <!--------- Model Performance-Page ------------>

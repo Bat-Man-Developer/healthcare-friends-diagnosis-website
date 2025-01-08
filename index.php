@@ -2,7 +2,8 @@
 include('layouts/header.php');
 ?>
   <body>
-    <!--------- Dashboard-Page ------------>
+    <!--------- Dashboard-Page --------->
+    
     <section class="dashboard"> 
       <div class="dashboardcontainer" id="dashboardcontainer">
         <div class="text-center mt-3 pt-5 col-lg-6 col-md-12 col-sm-12">

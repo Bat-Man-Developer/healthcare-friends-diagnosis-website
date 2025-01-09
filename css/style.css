@@ -1,1177 +1,625 @@
-/*-----------All Size Screen-----------*/
-*{
-	margin: 0px;
-	padding: 0px;
-	box-sizing: border-box;
-}
-
-body{
-	font-family: 'Poppins', sans-serif;
-	margin:4px, 4px;
-	padding:4px;
-	overflow-x: auto;
-	overflow-y: auto;
-}
-
-.adminbtn input{
-	max-width: 50%;
-}
-
-#admineditbtn{
-	max-width: 50%;
-}
-
-#refreshbtn{
-	display: block;
-	margin: auto;
-	max-width: 20%;
-}
-
-.btn{
-	display: inline-block;
-	background: rgb(18, 58, 190);
-	color: #fff;
-	padding: 2px 8px;
-	margin: 30px 0;
-	border-radius: 30px;
-	transition: background 0.5s;
-	width: fit-content;
-	height: fit-content;
-	text-decoration: none;
-}
-.btn:hover{
-	background: #083475;
-}
-
-/*-------Admin-Header-page-------*/
-.sidenav {
-	margin-top: 5px;
-	margin-left: -200px;
-	height: 100vh;
-	width: 200px;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	background-image: url('../images/background1.gif');
-	transition: 0.5s;
-	padding-top: 60px;
-	overflow-y: auto;
-}
-
-.sidenav .logo{
-	width: 150px; 
-	height: 140px;
-	border: solid #fff;
-	margin-bottom: 30px;
-	box-shadow: 5px 5px 5px rgb(0, 0, 0);
-}
-
-.sidenav img{
-	width: 146px; 
-	height: 133px; 
-	align-self: left;
-	border-radius: 5px;
-	box-shadow: 5px 5px 5px rgb(0, 0, 0);
-}
-
-.sidenav img:hover{
-	width: 147px; 
-	height: 135px;
-	margin-left: -38px;
-	margin-top: -10px;
-	box-shadow: -3px 5px -5px rgb(0, 0, 0);
-}
-
-.sidenav a {
-	padding: 8px 8px 8px 32px;
-	text-decoration: none;
-	font-size: 18px;
-	font-family: verdana;
-	color: #818181;
-	display: block;
-	transition: 0.3s;
-}
-
-.sidenav a:hover {
-	color: #f1f1f1;
-}
-
-.topnavbar{
-	width: 100vw;
-	height: 150px;
-	position: fixed;
-	background-image: url('../images/background1.gif');
-}
-
-.topnavbar ul{
-	background-image: url('../images/background1.gif');
-	color: white;
-	margin-top: 5px;
-}
-
-.topnavbar a{
-	padding: 10px;
-}
-
-#adminmenuicon{
-	display: flex;
-	cursor: pointer;
-	box-shadow: 0px 5px 10px rgb(0, 0, 0);
-	border: solid #fff;
-	border-radius: 50px;
-	background-color: rgb(18, 38, 166);
-	font-family: verdana;
-	color: silver;
-	text-decoration: none;
-	transition: 1s;
-	width: fit-content;
-	height: fit-content;
-	font-size: 50%;
-	position: absolute;
-	top: 0%;
-	margin-top: 2px;
-	margin-left: 80%;
-}
-
-.signout{
-	cursor: pointer;
-	box-shadow: 0px 5px 10px rgb(0, 0, 0);
-	border: solid #fff;
-	border-radius: 50px;	
-	font-family: verdana;
-	color: silver;
-	text-decoration: none;
-	transition: 1s;
-	background-color: rgb(18, 38, 166);
-	width: fit-content;
-	height: fit-content;
-	font-size: 50%;
-	margin-left: 5%;
-}
-
-.notificationquantity{
-	background-color: red;
-	color: #fff;
-	padding: 2px 5px;
-	border-radius: 50%;
-	margin: -5px;
-}
-
-.notificationpic{
-	cursor: pointer;
-	object-position: 0px 0px;
-	box-shadow: 0px 5px 10px rgb(0, 0, 0);
-	border: solid #fff;
-	border-radius: 50px;
-	background-color: rgb(18, 38, 166);
-	transition: 1s;
-	width: 35px;
-	height: 35px;
-	margin-left: 5%;
-}
-
-.notificationpic:hover{
-	background-color: rgb(68, 91, 165);
-}
-
-.signout:hover{
-	color:rgb(68, 91, 165);
-}
-
-#adminmenuicon:hover{
-	color:rgb(68, 91, 165);
-}
-
-/*---------Admin-Footer-page------------*/
-.footer{
-	background: silver;
-	color: #8a8a8a;
-	width: 100vw;
-	height: 100vh;
-}
-
-.footer p{
-	color: #8a8a8a;
-}
-
-.copyright{
-	font-size: 14px;
-	text-align: center;
-}
-
-/*---------- Layouts ---------*/
-.adminbtn{
-	text-align: center;
-	margin-top: 20px;
-}
-
-/*----Index-Page --------*/
-#backgroundImg2{
-	display: block;
-	margin: auto;
-	width: 50%;
-	height: auto;
-}
-
-/*----Dashboard-Page --------*/
-.dashboard{
-	width: 100vw;
-	height: 100vh;
-	margin-top: 150px;
-}
-.dashboardcontainer{
-	border: solid silver;
-	border-width: 10px;
-	border-style: double;
-	width: 100vw;
-	height: fit-content;
-	margin-left: 0px;
-}
-
-.dashboardcontainer h3{
-	font-family: sans-serif;
-	font-size: large;
-	font-weight: bold;
-	text-align: center;
-	color: #000;
-}
-
-.dashboardadmininfo{
-	border: dotted #ccc;
-	border-width: 5px;
-	border-style: double;
-	width: 100%;
-	height: fit-content;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 40px;
-	font-size: 12px;
-	font-weight: 10px;
-	color: #000;
-	font-weight: bold;
-	margin-top: 7px;
-	margin-left: 2px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 1px;
-	font-size: 12px;
-	font-weight: 18;
-}
-
-.admindashboardcontainer #dashboardwelcome{
-	font-family: verdana;
-	font-style: italic;
-	font-size: large;
-	color: #555;
-	text-align: center;
-}
-
-.admindashboardcontainer a{
-	border-style: groove;
-	border-color: grey;
-}
-
-.admindashboardcontainer a:hover{
-	background-color: grey;
-	border-style: groove;
-}
-
-/*----------Admin Security Surveilence Page--------*/
-.securitysurveilencecontainer{
-max-width: 100%;
-margin: 20px auto;
-padding: 0 20px;
-text-align: center;
-}
-
-.chartcontainer{
-margin-bottom: 20px;
-}
-
-/*----------Admin IDS Page--------*/
-.adminidstable{
-	font-family: 'Courier New'; 
-	font-size: small;
-	font-style: normal;
-	width: 100%;
-}
-
-.adminidstitle{
-	text-align: center;
-}
-
-.adminIdsBtnNav{
-	text-align: center;
-}
-
-.adminlocalnetworktraffictable{
-	font-family: 'Courier New'; 
-	font-size: 10px;
-	font-style: normal;
-	width: 100%;
-	text-align: center;
-}
-
-/*-------media query for less than 1300 screen size----*/
-@media only screen and (max-width: 1300px){
-/*-------Admin-Header-page-------*/
-.sidenav {
-	margin-top: 4px;
-	padding-top: 30px;
-}
-
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px; 
-}
-
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
-	margin-left: -34px;
-	margin-top: -10px;
-}
-
-.sidenav a {
-	font-size: 15px;
-}
-
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: x-large;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 24px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 25px;
-}
-
-.admindashboardcontainer #dashboardwelcome{
-	font-size: x-large;
-}
-}
-
-/*-------media query for less than 1200 screen size----*/
-@media only screen and (max-width: 1200px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px; 
-}
-
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
-}
-
-.sidenav a {
-	font-size: 15px;
-}
-
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 17px;
-	margin-top: 7px;
-	margin-left: 2px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 17px;
-}
-
-.admindashboardcontainer #dashboardwelcome{
-	font-size: large;
-}
-}
-
-/*-------media query for less than 1100 screen size----*/
-@media only screen and (max-width: 1100px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px; 
-}
-
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
-}
-
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 17px;
-	margin-top: 7px;
-	margin-left: 2px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 17px;
+/* style.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: large;
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
 }
-}
-
-/*-------media query for less than 1000 screen size----*/
-@media only screen and (max-width: 1000px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px; 
-}
-
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
-}
-
-.sidenav a {
-	font-size: 15px;
-}
-
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 17px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 17px;
-}
-
-.admindashboardcontainer #dashboardwelcome{
-	font-size: large;
-}
-}
-
-/*-------media query for less than 900 screen size----*/
-@media only screen and (max-width: 900px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px; 
-}
-
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
-}
-
-.sidenav a {
-	font-size: 15px;
-}
-
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
-}
-
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
-}
-
-/*----------Admin Local Network Traffic Page--------*/
-.adminlocalnetworktraffictable{ 
-	font-size: 6px;
-}
-}
-
-/*-------media query for less than 800 screen size----*/
-@media only screen and (max-width: 800px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px; 
-}
-
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
-}
-
-.sidenav a {
-	font-size: 15px;
-}
-
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
-}
-
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
-}
-}
-
-/*-------media query for less than 750 screen size----*/
-@media only screen and (max-width: 750px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px;
-}
-
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
-}
-
-.sidenav a {
-	font-size: 15px;
-}
-
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
-}
-
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
-}
-}
-
-/*-------media query for less than 700 screen size----*/
-@media only screen and (max-width: 700px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px;
-}
-
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
-}
-
-.sidenav a {
-	font-size: 15px;
-}
-
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
-}
-
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
-}
-
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
-}
-
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
-}
-}
-
-/*-------media query for less than 650 screen size----*/
-@media only screen and (max-width: 650px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
-
-.sidenav img{
-	width: 83px; 
-	height: 79.5px; 
-}
 
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
+body {
+    line-height: 1.6;
+    background-color: #f5f6fa;
 }
 
-.sidenav a {
-	font-size: 15px;
+/* Navbar Styles */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
+.logo h1 {
+    color: white;
+    font-size: 1.5rem;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
+.nav-links {
+    display: flex;
+    list-style: none;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
+.nav-links li {
+    margin-left: 2rem;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
 }
-}
 
-/*-------media query for less than 600 screen size----*/
-@media only screen and (max-width: 600px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+.nav-links a:hover {
+    color: var(--secondary-color);
 }
 
-.sidenav img{
-	width: 83px; 
-	height: 79.5px;
+/* Main Content Styles */
+.main-content {
+    margin-top: 80px;
+    padding: 2rem;
 }
 
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('medical-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
 }
 
-.sidenav a {
-	font-size: 15px;
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
+.btn {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
+.btn-primary {
+    background-color: var(--secondary-color);
+    color: white;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
-}
+.btn-primary:hover {
+    background-color: #2980b9;
 }
 
-/*-------media query for less than 550 screen size----*/
-@media only screen and (max-width: 550px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+/* Form Styles */
+.form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.sidenav img{
-	width: 83px; 
-	height: 79.5px;
+.form-group {
+    margin-bottom: 1.5rem;
 }
 
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
 }
 
-.sidenav a {
-	font-size: 15px;
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
+/* Footer Styles */
+.footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2rem;
+    margin-top: 2rem;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
-	font-weight: 10px;
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
+.footer-section {
+    margin: 1rem;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
+.footer-section h3 {
+    margin-bottom: 1rem;
 }
-}
 
-/*-------media query for less than 500 screen size----*/
-@media only screen and (max-width: 500px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+.footer-section ul {
+    list-style: none;
 }
 
-.sidenav img{
-	width: 83px; 
-	height: 79.5px;
+.footer-section a {
+    color: white;
+    text-decoration: none;
 }
 
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-.sidenav a {
-	font-size: 15px;
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .burger {
+        display: block;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
-}
+/* Add these styles to your existing style.css file */
 
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
+/* Index Page Specific Styles */
+.features {
+    padding: 4rem 2rem;
+    background-color: white;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
+.feature-card {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
 }
 
-/*----------Admin Local Network Traffic Page--------*/
-.adminlocalnetworktraffictable{ 
-	font-size: 4px;
+.feature-card:hover {
+    transform: translateY(-5px);
 }
-}
 
-/*-------media query for less than 450 screen size----*/
-@media only screen and (max-width: 450px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
 }
 
-.sidenav img{
-	width: 83px; 
-	height: 79.5px;
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
+.cta-section {
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 4rem 2rem;
 }
 
-.sidenav a {
-	font-size: 15px;
+/* About Page Specific Styles */
+.about-hero {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 6rem 2rem;
+    margin-bottom: 4rem;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
+.our-story {
+    padding: 4rem 2rem;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
+.story-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
+.image-placeholder {
+    background-color: #ddd;
+    width: 100%;
+    padding-top: 75%;
+    border-radius: 10px;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
-}
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
-/*-------media query for less than 400 screen size----*/
-@media only screen and (max-width: 400px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 87px; 
-	height: 82px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+.mission-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
-.sidenav img{
-	width: 83px; 
-	height: 79.5px;
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
-.sidenav img:hover{
-	width: 83.5px; 
-	height: 74.5px;
+.team-member {
+    text-align: center;
 }
 
-.sidenav a {
-	font-size: 15px;
+.member-image {
+    background-color: #ddd;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: large;
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 14px;
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .story-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature-grid,
+    .benefits-grid,
+    .mission-grid,
+    .team-grid,
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-hero {
+        padding: 4rem 1rem;
+    }
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
+/* Dashboard Styles */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
 }
-}
 
-/*-------media query for less than 350 screen size----*/
-@media only screen and (max-width: 350px){
-/*-------Admin-Header-page-------*/
-.sidenav{
-	width: 100px;
+.dashboard-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-.sidenav .logo{
-	width: 37px; 
-	height: 35px;
-	margin-top: 55px;
-	margin-bottom: 35px;
-}
 
-.sidenav img{
-	width: 32px; 
-	height: 30px;
+/* Diagnosis Page Styles */
+.symptoms-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
 }
 
-.sidenav img:hover{
-	width: 32px; 
-	height: 30px;
+.symptom-item {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-.sidenav a {
-	font-size: 5px;
+/* Diagnosis Page Styles */
+.diagnosis-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
-/*---------Admin-Footer-page------------*/
-.copyright{
-	font-size: 10px;
+.symptoms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: small;
+.symptom-category {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 10px;
+.symptom-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
+.symptom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
-}
+.additional-info {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin: 2rem 0;
 }
 
-/*-------media query for less than 300 screen size----*/
-@media only screen and (max-width: 300px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 37px; 
-	height: 35px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
 }
 
-.sidenav img{
-	width: 32px; 
-	height: 30px;
+.modal-content {
+    background: white;
+    margin: 10% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
 }
 
-.sidenav img:hover{
-	width: 32px; 
-	height: 30px;
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
-.sidenav a {
-	font-size: 5px;
+/* Dashboard Styles */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: small;
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 5px;
-	font-size: 10px;
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 0.5px;
-	font-size: 12px;
+.dashboard-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
 }
-}
 
-/*-------media query for less than 280 screen size----*/
-@media only screen and (max-width: 280px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 37px; 
-	height: 35px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+.stat-item {
+    text-align: center;
 }
 
-.sidenav img{
-	width: 32px; 
-	height: 30px;
+.stat-number {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--secondary-color);
 }
 
-.sidenav img:hover{
-	width: 32px; 
-	height: 30px;
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
 }
 
-.sidenav a {
-	font-size: 5px;
+.diagnosis-history {
+    max-height: 400px;
+    overflow-y: auto;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: small;
+.diagnosis-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 10px;
-	font-size: 12px;
+.diagnosis-item:last-child {
+    border-bottom: none;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 1px;
-	font-size: 12px;
+.health-tips {
+    display: grid;
+    gap: 1rem;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: large;
-}
+.tip-item {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 5px;
 }
 
-/*-------media query for less than 260 screen size----*/
-@media only screen and (max-width: 260px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 37px; 
-	height: 35px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .summary-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .diagnosis-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
 }
 
-.sidenav img{
-	width: 32px; 
-	height: 30px;
+/* Authentication Pages Styles */
+.auth-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    margin-top: 80px;
 }
 
-.sidenav img:hover{
-	width: 32px; 
-	height: 30px;
+.auth-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
 }
 
-.sidenav a {
-	font-size: 5px;
+.auth-card h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
 }
 
-/*----Dashboard-Page --------*/
-.dashboardcontainer h3{
-	font-size: small;
+.auth-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 2rem;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 10px;
-	font-size: 12px;
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 1px;
-	font-size: 12px;
+.form-control:focus {
+    border-color: var(--secondary-color);
+    outline: none;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: large;
+.form-control.is-invalid {
+    border-color: var(--accent-color);
 }
-}
 
-/*-------media query for less than 240 screen size----*/
-@media only screen and (max-width: 240px){
-/*-------Admin-Header-page-------*/
-.sidenav .logo{
-	width: 37px; 
-	height: 35px;
-	margin-top: 55px;
-	margin-bottom: 35px;
+.invalid-feedback {
+    color: var(--accent-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
 }
 
-.sidenav img{
-	width: 32px; 
-	height: 30px;
+.btn-block {
+    width: 100%;
+    margin-top: 1.5rem;
 }
 
-.sidenav img:hover{
-	width: 32px; 
-	height: 30px;
+.auth-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #666;
 }
 
-.sidenav a {
-	font-size: 5px;
+.auth-links a {
+    color: var(--secondary-color);
+    text-decoration: none;
 }
 
-.dashboardcontainer h3{
-	font-size: xx-small;
+.auth-links a:hover {
+    text-decoration: underline;
 }
 
-.dashboardadmininfo p{
-	word-spacing: 10px;
-	font-size: 8px;
+.alert {
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
 }
 
-.dashboardadmininfo span{
-	word-spacing: 1px;
-	font-size: 8px;
+.alert-danger {
+    background-color: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #ef4444;
 }
 
-.admindashboardcontainer #dashboardwelcome{
-	font-size: small;
-}
+/* Responsive adjustments */
+@media screen and (max-width: 480px) {
+    .auth-card {
+        padding: 1.5rem;
+    }
+    
+    .auth-container {
+        padding: 1rem;
+    }
 }

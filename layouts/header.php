@@ -1,61 +1,33 @@
+<!-- header.php -->
 <!DOCTYPE html>
-	<html lang="en">
-		<head>
-			<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>AI-DEMO</title>
-			<link rel="icon" href="../images/net-cure_logo.png" type="image/x-icon">
-    		<link rel="shortcut icon" href="../images/net-cure_logo.png" type="image/x-icon">
-			<link rel="stylesheet" type="text/css" href="../css/style.css">
-			<link rel="stylesheet" type="text/css" href="../css/style2.css">
-			<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&display=swap" rel="stylesheet">
-			<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-			<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-			<div>
-				<nav class="topnavbar">
-					<ul>
-						<a class="signout" href="index.php?adminlogout=1" name="adminlogout">Signout</a>
-					</ul>
-					<ul>
-						<a href="#"><img class="notificationpic" src="../images/notification_pic.png" alt="Snow">
-						<?php if(isset($_SESSION['totalnotificationquantity']) && $_SESSION['totalnotificationquantity'] != 0) { ?>
-								<span class="notificationquantity">
-									<?php echo $_SESSION['totalnotificationquantity']; ?>
-								</span>
-						<?php }?>
-						</a>
-					</ul>
-					<ul>
-						<a id="adminmenuicon" onclick="adminmenutoggle()" alt="Snow">Menu</a>
-					</ul>
-				</nav>
-			</div>
-
-			<div id="sidenav" class="sidenav">
-				<div class="logo">
-					<a href="index.php"><img src="../images/net-cure_logo.png" alt="Snow"></a>
-				</div>
-				<a href="test_model_performance.php">Test Model</a>
-				<a href="account.php">Account</a>
-				<a href="settings.php">Settings</a>
-				<a href="help.php">Help?</a><br><br><br>
-			</div>
-		</head>
-
-		<!----------js for toggle menu----------->
-		<script>
-			function adminmenutoggle(){ 
-				var sidenav = document.getElementById("sidenav");
-				sidenav.style.marginLeft == "-200px";
-				if(sidenav.style.marginLeft == "0px")
-				{
-					sidenav.style.marginLeft = "-200px";
-				}
-				else
-				{
-					sidenav.style.marginLeft = "0px";
-				}
-			}
-		</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthCare Diagnosis</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>HealthCare</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="diagnosis.php">Diagnosis</a></li>
+            <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            <?php else: ?>
+                <li><a href="login.php">Login</a></li>
+                <li><a href="register.php">Register</a></li>
+            <?php endif; ?>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>

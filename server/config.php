@@ -3,7 +3,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'healthcare_database';
+$database = 'healthcare_diagnosis_database';
 
 // Create a connection
 $conn = new mysqli($host, $username, $password, $database);

@@ -1,103 +1,435 @@
-<!-- login.php -->
-<?php
-session_start();
-include 'server/config.php';
-
-// Check if user is already logged in
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: dashboard.php");
-    exit;
-}
-
-$email = $password = "";
-$email_err = $password_err = $login_err = "";
-
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    // Validate email
-    if(empty(trim($_POST["email"]))){
-        $email_err = "Please enter your email.";
-    } else{
-        $email = trim($_POST["email"]);
-    }
-    
-    // Validate password
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter your password.";
-    } else{
-        $password = trim($_POST["password"]);
-    }
-    
-    // Validate credentials
-    if(empty($email_err) && empty($password_err)){
-        $sql = "SELECT id, email, password FROM users WHERE email = ?";
-        
-        if($stmt = mysqli_prepare($conn, $sql)){
-            mysqli_stmt_bind_param($stmt, "s", $param_email);
-            $param_email = $email;
-            
-            if(mysqli_stmt_execute($stmt)){
-                mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    mysqli_stmt_bind_result($stmt, $id, $email, $hashed_password);
-                    if(mysqli_stmt_fetch($stmt)){
-                        if(password_verify($password, $hashed_password)){
-                            session_start();
-                            
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["email"] = $email;
-                            
-                            header("location: dashboard.php");
-                        } else{
-                            $login_err = "Invalid email or password.";
-                        }
-                    }
-                } else{
-                    $login_err = "Invalid email or password.";
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-            mysqli_stmt_close($stmt);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HealthCare Diagnosis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CC9B0;
+            --secondary: #6C63FF;
+            --light: #F0F7FF;
+            --dark: #2D3748;
+            --success: #48BB78;
         }
-    }
-    mysqli_close($conn);
-}
 
-include 'layouts/header.php';
-?>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-<main class="main-content">
-    <div class="auth-container">
-        <div class="auth-card">
-            <h2>Login</h2>
-            <p class="auth-subtitle">Welcome back! Please login to your account.</p>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+        }
 
-            <?php 
-            if(!empty($login_err)){
-                echo '<div class="alert alert-danger">' . $login_err . '</div>';
-            }        
-            ?>
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
 
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 1rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.1;
+            animation: pulse 15s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleReveal 1s ease-out;
+        }
+
+        @keyframes titleReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 201, 176, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 201, 176, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .features {
+            padding: 5rem 1rem;
+            background: white;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--dark);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--light);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #F0F7FF 0%, #E8F0FE 100%);
+        }
+
+        .login-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 176, 0.3);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .error-message {
+            background: #FED7D7;
+            color: #C53030;
+            padding: 0.8rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .input-error {
+            animation: shake 0.5s ease-in-out;
+            border-color: #C53030;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+        <div class="nav-content">
+            <a href="index.php" class="logo">
+                <div class="logo-icon">H</div>
+                HealthCare
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="diagnosis.php">Diagnosis</a></li>
+                <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                    <li><a href="dashboard.php">Dashboard</a></li>
+                    <li><a href="logout.php">Logout</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Login</a></li>
+                    <li><a href="register.php">Register</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <div class="login-card">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
+            <div class="error-message" id="error-message"></div>
+            <form id="login-form" action="login_process.php" method="POST">
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
-                    <span class="invalid-feedback"><?php echo $email_err; ?></span>
-                </div>    
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                    <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
                 </div>
-                <p class="auth-links">Don't have an account? <a href="register.php">Sign up now</a></p>
+                <button type="submit" class="form-button">Login</button>
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="register.php">Sign up</a></p>
+                    <a href="forgot-password.php">Forgot Password?</a>
+                </div>
             </form>
         </div>
     </div>
-</main>
 
-<?php include 'layouts/footer.php'; ?>
+    <script>
+        const form = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Simple validation
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            
+            if (!email.value || !password.value) {
+                showError('Please fill in all fields');
+                return;
+            }
+
+            // Here you would typically submit the form
+            form.submit();
+        });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            // Shake animation
+            errorMessage.style.animation = 'none';
+            errorMessage.offsetHeight; // Trigger reflow
+            errorMessage.style.animation = 'shake 0.5s ease-in-out';
+        }
+    </script>
+</body>
+</html>

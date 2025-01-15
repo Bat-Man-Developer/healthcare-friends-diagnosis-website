@@ -1,7 +1,6 @@
 <!-- process_diagnosis.php -->
 <?php
-session_start();
-include 'server/config.php';
+include 'config.php';
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     $symptoms = isset($_POST['symptoms']) ? $_POST['symptoms'] : [];

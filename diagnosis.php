@@ -577,26 +577,144 @@
         }
 
         .dashboard-container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
+            display: flex;
             min-height: 100vh;
+            position: relative;
         }
 
         .sidebar {
             background: white;
-            padding: 2rem;
+            padding: 2rem 1rem;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             height: 100vh;
             width: 250px;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            z-index: 100;
         }
 
         .main-content {
-            padding: 2rem;
+            flex: 1;
+            padding: 2rem 1rem;
             background: #F7FAFC;
             margin-left: 250px;
-            width: 100%;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 200px;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .sidebar {
+                width: 180px;
+            }
+            
+            .nav-link {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .user-info {
+                padding-bottom: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .user-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .sidebar {
+                width: 180px;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.85rem;
+            }
+            
+            .user-info h3 {
+                font-size: 1rem;
+            }
+            
+            .user-info p {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 300px) {
+            .sidebar {
+                width: 180px;
+            }
+            
+            .nav-link {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .user-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 250px) {
+            .sidebar {
+                width: 180px;
+            }
+            
+            .nav-link {
+                padding: 0.3rem 0.4rem;
+                font-size: 0.75rem;
+            }
+            
+            .user-info h3 {
+                font-size: 0.9rem;
+            }
+            
+            .user-info p {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Add toggle button for mobile */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            left: 1rem;
+            top: 1rem;
+            z-index: 1001;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .sidebar-toggle {
+                display: block;
+            }
         }
 
         .user-info {
@@ -728,23 +846,6 @@
         }
 
         @media (max-width: 768px) {
-            .dashboard-container {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                transform: translateX(-100%);
-                z-index: 1000;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
             .mobile-menu-btn {
                 display: block;
             }
@@ -922,7 +1023,8 @@
     </style>
 </head>
 <body>
-<nav class="navbar">
+    <button class="sidebar-toggle">☰</button>
+    <nav class="navbar">
         <div class="nav-content">
             <a href="index.php" class="logo">
                 <div class="logo-icon">H</div>
@@ -968,7 +1070,7 @@
     </div>
 
     <div class="dashboard-container">
-        <aside class="sidebar">
+        <aside class="sidebar"><br><br><br>
             <div class="user-info">
                 <div class="user-avatar">
                     JD
@@ -1003,7 +1105,7 @@
         </aside>
 
         <main class="main-content">
-            <h2 class="section-title">New Diagnosis</h2>
+            <h2 class="section-title"><br>New Diagnosis</h2>
             
             <form class="diagnosis-form" id="diagnosisForm">
                 <div class="form-group">
@@ -1132,6 +1234,30 @@
             if (severity < 60) return 'Moderate';
             return 'Severe';
         }
+
+        // Sidebar toggle functionality
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 600) {
+                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 600) {
+                sidebar.classList.remove('active');
+            }
+        });
 
         // mobile navigation
         const mobileNavToggle = document.querySelector('.hamburger-menu');

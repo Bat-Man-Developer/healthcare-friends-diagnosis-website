@@ -596,7 +596,7 @@
 
         .main-content {
             flex: 1;
-            padding: 2rem 1rem;
+            padding: 8rem 4rem;
             background: #F7FAFC;
             margin-left: 250px;
             transition: margin-left 0.3s ease;

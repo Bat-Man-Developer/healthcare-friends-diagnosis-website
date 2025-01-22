@@ -577,25 +577,144 @@
         }
 
         .dashboard-container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
+            display: flex;
             min-height: 100vh;
+            position: relative;
         }
 
         .sidebar {
             background: white;
-            padding: 2rem;
+            padding: 2rem 1rem;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             height: 100vh;
             width: 250px;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            z-index: 100;
         }
 
         .main-content {
-            padding: 2rem;
+            flex: 1;
+            padding: 2rem 1rem;
             background: #F7FAFC;
             margin-left: 250px;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 200px;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .sidebar {
+                width: 180px;
+            }
+            
+            .nav-link {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .user-info {
+                padding-bottom: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .user-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .sidebar {
+                width: 180px;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.85rem;
+            }
+            
+            .user-info h3 {
+                font-size: 1rem;
+            }
+            
+            .user-info p {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 300px) {
+            .sidebar {
+                width: 180px;
+            }
+            
+            .nav-link {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .user-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 250px) {
+            .sidebar {
+                width: 180px;
+            }
+            
+            .nav-link {
+                padding: 0.3rem 0.4rem;
+                font-size: 0.75rem;
+            }
+            
+            .user-info h3 {
+                font-size: 0.9rem;
+            }
+            
+            .user-info p {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Add toggle button for mobile */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            left: 1rem;
+            top: 1rem;
+            z-index: 1001;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .sidebar-toggle {
+                display: block;
+            }
         }
 
         .user-info {
@@ -727,23 +846,6 @@
         }
 
         @media (max-width: 768px) {
-            .dashboard-container {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                transform: translateX(-100%);
-                z-index: 1000;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
             .mobile-menu-btn {
                 display: block;
             }
@@ -776,10 +878,12 @@
         .dashboard-card:nth-child(4) {
             animation-delay: 0.6s;
         }
+        
     </style>
 </head>
 <body>
-<nav class="navbar">
+<button class="sidebar-toggle">☰</button>
+    <nav class="navbar">
         <div class="nav-content">
             <a href="index.php" class="logo">
                 <div class="logo-icon">H</div>
@@ -825,7 +929,7 @@
     </div>
 
     <div class="dashboard-container">
-        <aside class="sidebar">
+        <aside class="sidebar"><br><br><br>
             <div class="user-info">
                 <div class="user-avatar">
                     JD
@@ -892,6 +996,72 @@
                 <canvas id="healthChart"></canvas>
             </div>
 
+            <script>
+                // Simple chart using Canvas
+                const ctx = document.getElementById('healthChart').getContext('2d');
+                const data = {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    values: [65, 70, 68, 75, 82, 85]
+                };
+
+                function drawChart() {
+                    const width = ctx.canvas.width;
+                    const height = ctx.canvas.height;
+                    const padding = 40;
+                    const maxValue = Math.max(...data.values);
+                    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+
+                    ctx.clearRect(0, 0, width, height);
+
+                    // Draw grid lines
+                    ctx.strokeStyle = '#E2E8F0';
+                    ctx.beginPath();
+                    for (let i = 0; i <= 5; i++) {
+                        const y = padding + (height - 2 * padding) * (1 - i / 5);
+                        ctx.moveTo(padding, y);
+                        ctx.lineTo(width - padding, y);
+                    }
+                    ctx.stroke();
+
+                    // Draw line graph
+                    ctx.strokeStyle = primaryColor;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    data.values.forEach((value, index) => {
+                        const x = padding + (width - 2 * padding) * (index / (data.values.length - 1));
+                        const y = padding + (height - 2 * padding) * (1 - value / maxValue);
+                        if (index === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    });
+                    ctx.stroke();
+
+                    // Draw points
+                    ctx.fillStyle = primaryColor;
+                    data.values.forEach((value, index) => {
+                        const x = padding + (width - 2 * padding) * (index / (data.values.length - 1));
+                        const y = padding + (height - 2 * padding) * (1 - value / maxValue);
+                        ctx.beginPath();
+                        ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                        ctx.fill();
+                    });
+
+                    // Draw labels
+                    ctx.fillStyle = '#718096';
+                    ctx.font = '12px Poppins';
+                    ctx.textAlign = 'center';
+                    data.labels.forEach((label, index) => {
+                        const x = padding + (width - 2 * padding) * (index / (data.labels.length - 1));
+                        ctx.fillText(label, x, height - padding + 20);
+                    });
+                }
+
+                // Initial draw and resize handling
+                drawChart();
+                window.addEventListener('resize', drawChart);
+            </script>
             <div class="recent-activity">
                 <h3>Recent Activity</h3>
                 <div class="activity-item">
@@ -920,74 +1090,29 @@
     </div>
 
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
-            document.querySelector('.sidebar').classList.toggle('active');
+        // Sidebar toggle functionality
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
         });
 
-        // Simple chart using Canvas
-        const ctx = document.getElementById('healthChart').getContext('2d');
-        const data = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            values: [65, 70, 68, 75, 82, 85]
-        };
-
-        function drawChart() {
-            const width = ctx.canvas.width;
-            const height = ctx.canvas.height;
-            const padding = 40;
-            const maxValue = Math.max(...data.values);
-
-            ctx.clearRect(0, 0, width, height);
-
-            // Draw grid lines
-            ctx.strokeStyle = '#E2E8F0';
-            ctx.beginPath();
-            for (let i = 0; i <= 5; i++) {
-                const y = padding + (height - 2 * padding) * (1 - i / 5);
-                ctx.moveTo(padding, y);
-                ctx.lineTo(width - padding, y);
-            }
-            ctx.stroke();
-
-            // Draw line graph
-            ctx.strokeStyle = var('--primary');
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            data.values.forEach((value, index) => {
-                const x = padding + (width - 2 * padding) * (index / (data.values.length - 1));
-                const y = padding + (height - 2 * padding) * (1 - value / maxValue);
-                if (index === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 600) {
+                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
                 }
-            });
-            ctx.stroke();
+            }
+        });
 
-            // Draw points
-            ctx.fillStyle = var('--primary');
-            data.values.forEach((value, index) => {
-                const x = padding + (width - 2 * padding) * (index / (data.values.length - 1));
-                const y = padding + (height - 2 * padding) * (1 - value / maxValue);
-                ctx.beginPath();
-                ctx.arc(x, y, 4, 0, 2 * Math.PI);
-                ctx.fill();
-            });
-
-            // Draw labels
-            ctx.fillStyle = '#718096';
-            ctx.font = '12px Poppins';
-            ctx.textAlign = 'center';
-            data.labels.forEach((label, index) => {
-                const x = padding + (width - 2 * padding) * (index / (data.labels.length - 1));
-                ctx.fillText(label, x, height - padding + 20);
-            });
-        }
-
-        // Initial draw and resize handling
-        drawChart();
-        window.addEventListener('resize', drawChart);
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 600) {
+                sidebar.classList.remove('active');
+            }
+        });
 
         // mobile navigation
         const mobileNavToggle = document.querySelector('.hamburger-menu');

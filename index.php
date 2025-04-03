@@ -333,6 +333,7 @@
             padding: 4rem 1rem 1rem;
             position: relative;
             margin-top: 4rem;
+            text-align: center;
         }
 
         .footer::before {
@@ -352,6 +353,15 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
             padding-bottom: 2rem;
+            justify-items: center;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 300px;
         }
 
         .footer-section h3 {
@@ -360,22 +370,25 @@
             margin-bottom: 1.5rem;
             position: relative;
             padding-bottom: 0.5rem;
+            text-align: center;
         }
 
         .footer-section h3::after {
             content: '';
             position: absolute;
-            left: 0;
+            left: 50%;
             bottom: 0;
             width: 50px;
             height: 2px;
             background: var(--primary);
+            transform: translateX(-50%);
         }
 
         .footer-section p {
             color: #A0AEC0;
             margin-bottom: 0.8rem;
             transition: color 0.3s ease;
+            text-align: center;
         }
 
         .footer-section p:hover {
@@ -385,10 +398,16 @@
         .footer-section ul {
             list-style: none;
             padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .footer-section ul li {
             margin-bottom: 0.8rem;
+            width: 100%;
+            text-align: center;
         }
 
         .footer-section ul li a {
@@ -396,13 +415,14 @@
             text-decoration: none;
             transition: all 0.3s ease;
             position: relative;
-            padding-left: 1.5rem;
+            padding-left: 0;
+            display: inline-block;
         }
 
         .footer-section ul li a::before {
             content: '→';
             position: absolute;
-            left: 0;
+            left: -1.5rem;
             opacity: 0;
             transform: translateX(-10px);
             transition: all 0.3s ease;
@@ -410,7 +430,7 @@
 
         .footer-section ul li a:hover {
             color: var(--primary);
-            padding-left: 1.8rem;
+            transform: translateX(10px);
         }
 
         .footer-section ul li a:hover::before {
@@ -442,19 +462,7 @@
 
             .footer-section {
                 text-align: center;
-            }
-
-            .footer-section h3::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            .footer-section ul li a {
-                padding-left: 0;
-            }
-
-            .footer-section ul li a:hover {
-                padding-left: 0.5rem;
+                max-width: 100%;
             }
         }
 

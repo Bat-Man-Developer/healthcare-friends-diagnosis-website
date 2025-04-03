@@ -1,5 +1,5 @@
 <?php 
-include("server/getlogin.php");
+include("server/getloginverification.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -730,20 +730,14 @@ include("server/getlogin.php");
         <div class="login-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
             <div class="error-message" id="error-message"></div>
-            <form id="login-form" action="login.php" method="POST">
+            <form id="login-form" action="loginverification.php" method="POST">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="flduseremail" class="form-input" required>
+                    <label for="otpcode">OTP Code</label>
+                    <input type="number" id="otpcode" name="flduserotpcode" class="form-input" required>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="flduserpassword" class="form-input" required>
-                </div>
-                <button type="submit" name="loginBtn" class="form-button">Login</button>
-                <div class="form-footer">
-                    <p>Don't have an account? <a href="register.php">Sign up</a></p>
-                    <a href="forgot_password.php">Forgot Password?</a>
-                </div>
+                <input type="hidden" name="flduseremail" value="<?php echo $_GET['flduseremail']; ?>">
+				<button type="submit" name="loginVerificationBtn" class="form-button">Verify</button>
+                <p style="font-size: small"><a href="loginverification.php">Resend OTP Code</a></p>
             </form>
         </div>
     </div>

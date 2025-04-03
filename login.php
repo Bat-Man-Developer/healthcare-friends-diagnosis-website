@@ -182,6 +182,37 @@ include("server/getlogin.php");
             color: white;
         }
 
+        /*-------- website message error / success --------*/
+        #webmessage_red {
+            background-color: red;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
+        }
+
+        #webmessage_green{
+            background-color: green;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
+        }
+
         .features {
             padding: 5rem 1rem;
             background: white;
@@ -727,6 +758,14 @@ include("server/getlogin.php");
     </div>
 
     <div class="login-container">
+        <!--------- Website Message ------------>
+        <?php if(isset($_GET['error'])){ ?>
+            <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
+        <?php } ?>
+        <?php if(isset($_GET['success'])){ ?>
+            <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
+        <?php } ?>
+        
         <div class="login-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
             <div class="error-message" id="error-message"></div>

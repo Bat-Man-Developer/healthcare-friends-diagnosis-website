@@ -775,8 +775,8 @@ include("server/getloginverification.php");
                     <input type="number" id="otpcode" name="flduserotpcode" class="form-input" required>
                 </div>
                 <input type="hidden" name="flduseremail" value="<?php echo $_GET['flduseremail']; ?>">
-				<button type="submit" name="loginVerificationBtn" class="form-button">Verify</button>
-                <p style="font-size: small"><a href="loginverification.php">Resend OTP Code</a></p>
+				<button type="submit" name="loginVerificationBtn" class="form-button">Verify</button><br><br>
+                <p style="text-align: center;font-size: small"><a href="loginverification.php">Resend OTP Code</a></p>
             </form>
         </div>
     </div>

@@ -788,48 +788,48 @@ include("server/getregistration.php");
                 </div>
                 <div class="form-group  full-width">
                     <label for="registrationcountry">Country
-                        <select class="form-control" id="registrationcountry" name="fldusercountry" size="1" value="" required>
+                        <select class="form-input" id="registrationcountry" name="fldusercountry" size="1" value="" required>
                             <option value="">Select Country...</option>
                         </select>
                     </label>
                 </div><br>
                 <div class="form-group  full-width">
                     <label for="registrationzone">Province
-                        <select class="form-control" id="registrationzone" name="flduserzone" size="1" value="" required>
+                        <select class="form-input" id="registrationzone" name="flduserzone" size="1" value="" required>
                             <option value="">Select Province...</option>
                         </select>
                     </label>
                 </div><br>
                 <div class="form-group  full-width">
                     <label for="registrationcity">City
-                        <select class="form-control" id="registrationcity" name="fldusercity" size="1" value="" required>
+                        <select class="form-input" id="registrationcity" name="fldusercity" size="1" value="" required>
                             <option value="">Select City...</option>
                         </select>
                     </label>
                 </div><br>
                 <div class="form-group  full-width">
                     <label for="registrationlocalarea">Local Area
-                        <input type="text" class="form-control" id="registrationlocalarea" name="flduserlocalarea" placeholder="Local Area"/>
+                        <input type="text" class="form-input" id="registrationlocalarea" name="flduserlocalarea" placeholder="Local Area"/>
                     </label>
                 </div>
                 <div class="form-group  full-width">
                     <label for="registrationstreetaddress">Street Address
-                        <input type="text" class="form-control" id="registrationstreetaddress" name="flduserstreetaddress" placeholder="Street Address" required/>
+                        <input type="text" class="form-input" id="registrationstreetaddress" name="flduserstreetaddress" placeholder="Street Address" required/>
                     </label>
                 </div>
                 <div class="form-group  full-width">
                     <label for="registrationpostalcode">Postal Code
-                        <input type="number" class="form-control" id="registrationpostalcode" name="flduserpostalcode" placeholder="Postalcode" required/>
+                        <input type="number" class="form-input" id="registrationpostalcode" name="flduserpostalcode" placeholder="Postalcode" required/>
                     </label>
                 </div>
                 <div class="form-group  full-width">
                     <label for="registrationemail">Email
-                        <input type="email" class="form-control" id="registrationemail" name="flduseremail" placeholder="Email" required/>
+                        <input type="email" class="form-input" id="registrationemail" name="flduseremail" placeholder="Email" required/>
                     </label>
                 </div>
                 <div class="form-group  full-width">
                     <label for="registrationphonenumber">Phone Number
-                        <input type="number" class="form-control" id="registrationphonenumber" name="flduserphonenumber" placeholder="Phone Number" required/>
+                        <input type="number" class="form-input" id="registrationphonenumber" name="flduserphonenumber" placeholder="Phone Number" required/>
                     </label>
                 </div>
                 <div class="form-group full-width">

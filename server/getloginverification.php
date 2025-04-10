@@ -42,20 +42,21 @@ if(isset($_POST['loginVerificationBtn'])){
                 $_SESSION['login_attempts'] = 0;
                 $_SESSION['last_login_attempt'] = time();
 
-                //Set Users, Billing & Tesimonials/Suggestions Session
-                $_SESSION['flduserid'] = $_SESSION['fldbillingid'] = $userid;
-                $_SESSION['flduserimage'] = $_SESSION['fldtestimonialsimage'] = $userimage;
-                $_SESSION['flduserfirstname'] = $_SESSION['fldbillingfirstname'] = $_SESSION['fldtestimonialsfirstname'] = $userfirstname;
-                $_SESSION['flduserlastname'] = $_SESSION['fldbillinglastname'] = $_SESSION['fldtestimonialslastname'] = $userlastname;
-                $_SESSION['flduserstreetaddress'] = $_SESSION['fldbillingstreetaddress'] = $userstreetaddress;
-                $_SESSION['flduserlocalarea'] = $_SESSION['fldbillinglocalarea'] = $userlocalarea;
-                $_SESSION['fldusercity'] = $_SESSION['fldbillingcity'] = $usercity;
-                $_SESSION['flduserzone'] = $_SESSION['fldbillingzone'] = $userzone;
-                $_SESSION['fldusercountry'] = $_SESSION['fldbillingcountry'] = $_SESSION['fldtestimonialscountry'] = $usercountry;
-                $_SESSION['flduserpostalcode'] = $_SESSION['fldbillingpostalcode'] = $userpostalcode;
-                $_SESSION['flduseremail'] = $_SESSION['fldbillingemail'] = $_SESSION['fldtestimonialsemail'] = $useremail;
-                $_SESSION['flduserphonenumber'] = $_SESSION['fldbillingphonenumber'] = $userphonenumber;
+                //Set Users Session
+                $_SESSION['flduserid'] = $userid;
+                $_SESSION['flduserimage'] = $userimage;
+                $_SESSION['flduserfirstname'] = $userfirstname;
+                $_SESSION['flduserlastname'] = $userlastname;
+                $_SESSION['flduserstreetaddress'] = $userstreetaddress;
+                $_SESSION['flduserlocalarea'] = $userlocalarea;
+                $_SESSION['fldusercity'] = $usercity;
+                $_SESSION['flduserzone'] = $userzone;
+                $_SESSION['fldusercountry'] = $_SESSION['fldtestimonialscountry'] = $usercountry;
+                $_SESSION['flduserpostalcode'] = $userpostalcode;
+                $_SESSION['flduseremail'] = $useremail;
+                $_SESSION['flduserphonenumber'] = $userphonenumber;
                 $_SESSION['logged_in'] = true;
+
                 
                 // Send Email To User
                 $to = $useremail;

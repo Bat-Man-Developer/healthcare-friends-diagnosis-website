@@ -750,7 +750,7 @@ include("server/getlogin.php");
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Login</a></li>
-                    <li><a href="register.php">Register</a></li>
+                    <li><a href="registration.php">Register</a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -775,7 +775,7 @@ include("server/getlogin.php");
                 <li><a href="logout.php">Logout</a></li>
             <?php else: ?>
                 <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
+                <li><a href="registration.php">Register</a></li>
             <?php endif; ?>
         </ul>
     </div>
@@ -803,8 +803,8 @@ include("server/getlogin.php");
                 </div>
                 <button type="submit" name="loginBtn" class="form-button">Login</button>
                 <div class="form-footer">
-                    <p>Don't have an account? <a href="register.php">Sign up</a></p>
-                    <a href="forgot_password.php">Forgot Password?</a>
+                    <p>Don't have an account? <a href="registration.php">Sign up</a></p>
+                    <a href="resetpassword.php">Forgot Password?</a>
                 </div>
             </form>
         </div>

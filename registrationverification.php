@@ -22,14 +22,14 @@ header("X-XSS-Protection: 1; mode=block");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 //header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
 
-include("server/getloginverification.php");
+include("server/getregistrationverification.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - HealthCare Diagnosis</title>
+    <title>Register - HealthCare Diagnosis</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -203,37 +203,6 @@ include("server/getloginverification.php");
         .btn-secondary:hover {
             background: var(--primary);
             color: white;
-        }
-
-        /*-------- website message error / success --------*/
-        #webmessage_red {
-            background-color: red;
-            font-weight: bold;
-            text-align: center;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-            color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
-        }
-
-        #webmessage_green{
-            background-color: green;
-            font-weight: bold;
-            text-align: center;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-            color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
         }
 
         .features {
@@ -633,7 +602,7 @@ include("server/getloginverification.php");
             }
         }
         
-        .login-container {
+        .register-container {
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -642,18 +611,18 @@ include("server/getloginverification.php");
             background: linear-gradient(135deg, #F0F7FF 0%, #E8F0FE 100%);
         }
 
-        .login-card {
+        .register-card {
             background: white;
             padding: 3rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             position: relative;
             overflow: hidden;
         }
 
-        .login-card::before {
+        .register-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -663,8 +632,18 @@ include("server/getloginverification.php");
             background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
 
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
         }
 
         .form-group label {
@@ -684,6 +663,20 @@ include("server/getloginverification.php");
 
         .form-input:focus {
             border-color: var(--primary);
+        }
+
+        .password-strength {
+            height: 5px;
+            background: #E2E8F0;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background-color 0.3s ease;
         }
 
         .form-button {
@@ -722,20 +715,18 @@ include("server/getloginverification.php");
             display: none;
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .input-error {
-            animation: shake 0.5s ease-in-out;
-            border-color: #C53030;
+        .register-card {
+            animation: slideIn 0.5s ease-out;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
+<nav class="navbar">
         <div class="nav-content">
             <a href="index.php" class="logo">
                 <div class="logo-icon">H</div>
@@ -745,7 +736,7 @@ include("server/getloginverification.php");
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="diagnosis.php">Diagnosis</a></li>
-                <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
+                <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
@@ -770,7 +761,7 @@ include("server/getloginverification.php");
             <li><a href="index.php">Home</a></li>
             <li><a href="about.php">About</a></li>
             <li><a href="diagnosis.php">Diagnosis</a></li>
-            <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
+            <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="logout.php">Logout</a></li>
             <?php else: ?>
@@ -780,39 +771,68 @@ include("server/getloginverification.php");
         </ul>
     </div>
 
-    <div class="login-container">
-        <!--------- Website Message ------------>
-        <?php if(isset($_GET['error'])){ ?>
-            <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
-        <?php } ?>
-        <?php if(isset($_GET['success'])){ ?>
-            <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
-        <?php } ?>
-        
-        <div class="login-card">
-            <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
+    <div class="register-container">
+        <div class="register-card">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
             <div class="error-message" id="error-message"></div>
-            <form id="login-form" action="loginverification.php" method="POST">
-                <div class="form-group">
-                    <label for="otpcode">OTP Code</label>
-                    <input type="number" id="otpcode" name="flduserotpcode" class="form-input" required>
+            <form id="register-form" action="registrationverification.php" method="POST">
+                <div class="form-grid">
+                <div class="form-group  full-width">
+                    <label for="registrationotpcode">OTP Code
+                        <input type="text" class="form-control" id="registrationotpcode" name="flduserotpcode" placeholder="OTP Code" required/>
+                    </label>
                 </div>
-                <input type="hidden" name="flduseremail" value="<?php echo $_GET['flduseremail']; ?>">
-				<button type="submit" name="loginVerificationBtn" class="form-button">Verify</button><br><br>
-                <p style="text-align: center;font-size: small"><a href="loginverification.php">Resend OTP Code</a></p>
+                <button type="submit" name="registrationVerificationBtn" class="form-button">Create Account</button>
             </form>
         </div>
     </div>
 
     <script>
+        const form = document.getElementById('register-form');
+        const errorMessage = document.getElementById('error-message');
+        const passwordInput = document.getElementById('password');
+        const passwordStrength = document.getElementById('passwordStrength');
+
+        passwordInput.addEventListener('input', updatePasswordStrength);
+
+        function updatePasswordStrength() {
+            const password = passwordInput.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength += 25;
+            if (password.match(/[A-Z]/)) strength += 25;
+            if (password.match(/[0-9]/)) strength += 25;
+            if (password.match(/[^A-Za-z0-9]/)) strength += 25;
+
+            passwordStrength.style.width = `${strength}%`;
+            
+            if (strength < 50) {
+                passwordStrength.style.backgroundColor = '#FC8181';
+            } else if (strength < 75) {
+                passwordStrength.style.backgroundColor = '#F6E05E';
+            } else {
+                passwordStrength.style.backgroundColor = '#68D391';
+            }
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+
+            // Here you would typically submit the form
+            form.submit();
+        });
+
         function showError(message) {
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
-            
-            // Shake animation
-            errorMessage.style.animation = 'none';
-            errorMessage.offsetHeight; // Trigger reflow
-            errorMessage.style.animation = 'shake 0.5s ease-in-out';
         }
 
         // mobile navigation

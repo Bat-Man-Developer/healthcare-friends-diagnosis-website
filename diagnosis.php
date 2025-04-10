@@ -1064,7 +1064,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Login</a></li>
-                    <li><a href="register.php">Register</a></li>
+                    <li><a href="registration.php">Register</a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -1089,7 +1089,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                 <li><a href="logout.php">Logout</a></li>
             <?php else: ?>
                 <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
+                <li><a href="registration.php">Register</a></li>
             <?php endif; ?>
         </ul>
     </div>

@@ -22,6 +22,7 @@ header("X-XSS-Protection: 1; mode=block");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 //header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
 
+include("server/getregistration.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -740,7 +741,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Login</a></li>
-                    <li><a href="register.php">Register</a></li>
+                    <li><a href="registration.php">Register</a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -765,7 +766,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                 <li><a href="logout.php">Logout</a></li>
             <?php else: ?>
                 <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
+                <li><a href="registration.php">Register</a></li>
             <?php endif; ?>
         </ul>
     </div>
@@ -774,33 +775,75 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
         <div class="register-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
             <div class="error-message" id="error-message"></div>
-            <form id="register-form" action="register_process.php" method="POST">
+            <form id="register-form" action="registration.php" method="POST">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName" class="form-input" required>
+                        <label for="registrationfirstname">First Name</label>
+                        <input type="text" id="firstName" name="flduserfirstname" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" class="form-input" required>
+                        <label for="registrationlastname">Last Name</label>
+                        <input type="text" id="lastname" name="flduserlastname" class="form-input" required>
                     </div>
                 </div>
-                <div class="form-group full-width">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-input" required>
+                <div class="form-group  full-width">
+                    <label for="registrationcountry">Country
+                        <select class="form-control" id="registrationcountry" name="fldusercountry" size="1" value="" required>
+                            <option value="">Select Country...</option>
+                        </select>
+                    </label>
+                </div><br>
+                <div class="form-group  full-width">
+                    <label for="registrationzone">Province
+                        <select class="form-control" id="registrationzone" name="flduserzone" size="1" value="" required>
+                            <option value="">Select Province...</option>
+                        </select>
+                    </label>
+                </div><br>
+                <div class="form-group  full-width">
+                    <label for="registrationcity">City
+                        <select class="form-control" id="registrationcity" name="fldusercity" size="1" value="" required>
+                            <option value="">Select City...</option>
+                        </select>
+                    </label>
+                </div><br>
+                <div class="form-group  full-width">
+                    <label for="registrationlocalarea">Local Area
+                        <input type="text" class="form-control" id="registrationlocalarea" name="flduserlocalarea" placeholder="Local Area"/>
+                    </label>
+                </div>
+                <div class="form-group  full-width">
+                    <label for="registrationstreetaddress">Street Address
+                        <input type="text" class="form-control" id="registrationstreetaddress" name="flduserstreetaddress" placeholder="Street Address" required/>
+                    </label>
+                </div>
+                <div class="form-group  full-width">
+                    <label for="registrationpostalcode">Postal Code
+                        <input type="number" class="form-control" id="registrationpostalcode" name="flduserpostalcode" placeholder="Postalcode" required/>
+                    </label>
+                </div>
+                <div class="form-group  full-width">
+                    <label for="registrationemail">Email
+                        <input type="email" class="form-control" id="registrationemail" name="flduseremail" placeholder="Email" required/>
+                    </label>
+                </div>
+                <div class="form-group  full-width">
+                    <label for="registrationphonenumber">Phone Number
+                        <input type="number" class="form-control" id="registrationphonenumber" name="flduserphonenumber" placeholder="Phone Number" required/>
+                    </label>
                 </div>
                 <div class="form-group full-width">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-input" required>
+                    <label for="registrationpassword">Password</label>
+                    <input type="password" id="password" name="flduserpassword" class="form-input" required>
                     <div class="password-strength">
                         <div class="password-strength-bar" id="passwordStrength"></div>
                     </div>
                 </div>
                 <div class="form-group full-width">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+                    <label for="registrationconfirmpassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="flduserconfirmpassword" class="form-input" required>
                 </div>
-                <button type="submit" class="form-button">Create Account</button>
+                <button type="submit" name="registrationBtn" class="form-button">Create Account</button>
                 <div class="form-footer">
                     <p>Already have an account? <a href="login.php">Login</a></p>
                 </div>
@@ -891,6 +934,122 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                 mobileNavToggle.classList.remove('active');
                 mobileNav.classList.remove('active');
                 document.body.style.overflow = '';
+            }
+        });
+    </script>
+
+    <script>
+        const countries = [
+            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+            "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
+            "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic",
+            "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+            "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
+            "Fiji", "Finland", "France",
+            "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+            "Haiti", "Honduras", "Hungary",
+            "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast",
+            "Jamaica", "Japan", "Jordan",
+            "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan",
+            "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+            "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+            "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway",
+            "Oman",
+            "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+            "Qatar",
+            "Romania", "Russia", "Rwanda",
+            "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+            "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
+            "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan",
+            "Vanuatu", "Vatican City", "Venezuela", "Vietnam",
+            "Yemen",
+            "Zambia", "Zimbabwe"
+        ];
+
+        const provinces = {
+            "United States": ["California", "New York", "Texas", "Florida"],
+            "Canada": ["Ontario", "Quebec", "British Columbia", "Alberta"],
+            "United Kingdom": ["England", "Scotland", "Wales", "Northern Ireland"],
+            "Germany": ["Bavaria", "North Rhine-Westphalia", "Baden-Württemberg", "Hesse"],
+            "France": ["Île-de-France", "Auvergne-Rhône-Alpes", "Nouvelle-Aquitaine", "Occitanie"],
+            "Japan": ["Tokyo", "Osaka", "Kanagawa", "Aichi"],
+            "Australia": ["New South Wales", "Victoria", "Queensland", "Western Australia"],
+            "Brazil": ["São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia"],
+            "South Africa": [
+                "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo",
+                "Mpumalanga", "North West", "Northern Cape", "Western Cape"
+            ],
+            "India": ["Maharashtra", "Uttar Pradesh", "Tamil Nadu", "Karnataka"]
+        };
+
+        const cities = {
+            "California": ["Los Angeles", "San Francisco", "San Diego"],
+            "New York": ["New York City", "Buffalo", "Albany"],
+            "Ontario": ["Toronto", "Ottawa", "Hamilton"],
+            "Quebec": ["Montreal", "Quebec City", "Laval"],
+            "England": ["London", "Manchester", "Birmingham"],
+            "Scotland": ["Edinburgh", "Glasgow", "Aberdeen"],
+            "Bavaria": ["Munich", "Nuremberg", "Augsburg"],
+            "North Rhine-Westphalia": ["Cologne", "Düsseldorf", "Dortmund"],
+            "Île-de-France": ["Paris", "Versailles", "Saint-Denis"],
+            "Auvergne-Rhône-Alpes": ["Lyon", "Grenoble", "Saint-Étienne"],
+            "Tokyo": ["Shinjuku", "Shibuya", "Chiyoda"],
+            "Osaka": ["Osaka City", "Sakai", "Higashiosaka"],
+            "New South Wales": ["Sydney", "Newcastle", "Wollongong"],
+            "Victoria": ["Melbourne", "Geelong", "Ballarat"],
+            "São Paulo": ["São Paulo City", "Campinas", "Guarulhos"],
+            "Rio de Janeiro": ["Rio de Janeiro City", "Niterói", "São Gonçalo"],
+            "Eastern Cape": ["Port Elizabeth", "East London", "Mthatha", "Uitenhage", "Queenstown", "King William's Town", "Grahamstown", "Graaff-Reinet", "Cradock", "Butterworth"],
+            "Free State": ["Bloemfontein", "Welkom", "Bethlehem", "Kroonstad", "Parys", "Sasolburg", "Odendaalsrus", "Phuthaditjhaba", "Virginia", "Botshabelo"],
+            "Gauteng": ["Johannesburg", "Pretoria", "Soweto", "Benoni", "Tembisa", "Boksburg", "Centurion", "Germiston", "Krugersdorp", "Vereeniging", "Springs", "Roodepoort", "Randburg"],
+            "KwaZulu-Natal": ["Durban", "Pietermaritzburg", "Newcastle", "Richards Bay", "Ladysmith", "Port Shepstone", "Empangeni", "Vryheid", "Estcourt", "Ulundi"],
+            "Limpopo": ["Polokwane", "Tzaneen", "Phalaborwa", "Mokopane", "Thohoyandou", "Louis Trichardt", "Musina", "Lebowakgomo", "Giyani", "Thabazimbi"],
+            "Mpumalanga": ["Nelspruit", "Witbank", "Secunda", "Middelburg", "Ermelo", "Standerton", "Barberton", "Piet Retief", "Bethal", "Lydenburg"],
+            "North West": ["Rustenburg", "Klerksdorp", "Potchefstroom", "Mahikeng", "Brits", "Lichtenburg", "Zeerust", "Wolmaransstad", "Vryburg", "Schweizer-Reneke"],
+            "Northern Cape": ["Kimberley", "Upington", "Kuruman", "Springbok", "De Aar", "Calvinia", "Colesberg", "Port Nolloth", "Prieska", "Douglas"],
+            "Western Cape": ["Cape Town", "Stellenbosch", "George", "Paarl", "Worcester", "Oudtshoorn", "Mossel Bay", "Hermanus", "Knysna", "Swellendam"],
+            "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
+            "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra"]
+        };
+
+        const countrySelect = document.getElementById('registrationcountry');
+        const provinceSelect = document.getElementById('registrationzone');
+        const citySelect = document.getElementById('registrationcity');
+
+        // Populate countries
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            countrySelect.appendChild(option);
+        });
+
+        // Event listener for country selection
+        countrySelect.addEventListener('change', function() {
+            provinceSelect.innerHTML = '<option value="">Select Province...</option>';
+            citySelect.innerHTML = '<option value="">Select City...</option>';
+
+            if (this.value && provinces[this.value]) {
+            provinces[this.value].forEach(province => {
+                const option = document.createElement('option');
+                option.value = province;
+                option.textContent = province;
+                provinceSelect.appendChild(option);
+            });
+            }
+        });
+
+        // Event listener for province selection
+        provinceSelect.addEventListener('change', function() {
+            citySelect.innerHTML = '<option value="">Select City...</option>';
+        
+            if (this.value && cities[this.value]) {
+            cities[this.value].forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+            });
             }
         });
     </script>

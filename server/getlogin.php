@@ -1,6 +1,6 @@
 <?php
 include('connection.php');
-if(isset($_POST['loginbtn'])){
+if(isset($_POST['loginBtn'])){
     $useremail = filter_var($_POST['flduseremail'], FILTER_SANITIZE_EMAIL);
     if (!filter_var($useremail, FILTER_VALIDATE_EMAIL)) {
         header('location: ../login.php?error=Invalid Email Format');

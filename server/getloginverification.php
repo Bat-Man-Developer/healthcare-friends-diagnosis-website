@@ -1,6 +1,6 @@
 <?php
 include('connection.php');
-if(isset($_POST['loginverificationbtn'])){
+if(isset($_POST['loginVerificationBtn'])){
     // Rate Limiting
     if (!isset($_SESSION['login_attempts'])) {
         $_SESSION['login_attempts'] = 0;

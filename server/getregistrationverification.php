@@ -103,7 +103,7 @@ if(isset($_POST['registrationVerificationBtn'])){
                         $_SESSION['flduserlocalarea'] = $userlocalarea;
                         $_SESSION['fldusercity'] = $usercity;
                         $_SESSION['flduserzone'] = $userzone;
-                        $_SESSION['fldusercountry'] = $_SESSION['fldtestimonialscountry'] = $usercountry;
+                        $_SESSION['fldusercountry'] = $usercountry;
                         $_SESSION['flduserpostalcode'] = $userpostalcode;
                         $_SESSION['flduseremail'] = $useremail;
                         $_SESSION['flduserphonenumber'] = $userphonenumber;

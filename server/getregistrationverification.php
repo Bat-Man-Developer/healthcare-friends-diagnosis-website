@@ -115,7 +115,7 @@ if(isset($_POST['registrationVerificationBtn'])){
                         $message = "Hello $userfirstname,\n\nYou have successfully registered.\n\nBest regards,\nNewstuffSA Team";
                         // Additional headers for better email security
                         $headers = array(
-                            'From: noreply@newstuffsa.com',
+                            'From: info@fcsholdix.co.za',
                             'X-Mailer: PHP/' . phpversion(),
                             'MIME-Version: 1.0',
                             'Content-Type: text/plain; charset=UTF-8'
@@ -125,12 +125,12 @@ if(isset($_POST['registrationVerificationBtn'])){
                         if(mail($to, $subject, $message, $headers)){
                             // Email sent successfully. Go To Account Page.
                             unset($_SESSION['fldverifyotpcode']);
-                            header('location: ../account.php?success=You Registered Succesfully.');
+                            header('location: ../dashboard.php?success=You Registered Succesfully.');
                             exit;
                         } else {
                             // Email sending failed
                             unset($_SESSION['fldverifyotpcode']);
-                            header('location: ../account.php?error=You Registered Succesfully. Failed Sending Registration Email.');
+                            header('location: ../dashboard.php?error=You Registered Succesfully. Failed Sending Registration Email.');
                             exit;
                         }
                     } else {

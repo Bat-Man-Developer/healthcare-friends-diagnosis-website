@@ -779,7 +779,7 @@ include("server/getregistrationverification.php");
                 <div class="form-grid">
                 <div class="form-group  full-width">
                     <label for="registrationotpcode">OTP Code
-                        <input type="text" class="form-control" id="registrationotpcode" name="flduserotpcode" placeholder="OTP Code" required/>
+                        <input type="text" class="form-input" id="registrationotpcode" name="flduserotpcode" placeholder="OTP Code" required/>
                     </label>
                 </div>
                 <button type="submit" name="registrationVerificationBtn" class="form-button">Create Account</button>

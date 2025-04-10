@@ -64,7 +64,7 @@ if(isset($_POST['registrationBtn'])){
       $message = "Hello $userfirstname,\n\nHere is your Registration OTP Code: $otpcode. \n\nBest regards,\nNewstuffSA Team";
       // Additional headers for better email security
       $headers = array(
-        'From: noreply@newstuffsa.com',
+        'From: info@fcsholdix.co.za',
         'X-Mailer: PHP/' . phpversion(),
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8'

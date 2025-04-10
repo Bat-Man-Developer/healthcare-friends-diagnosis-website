@@ -26,14 +26,13 @@ if(isset($_POST['loginBtn'])){
                 $otpcode = rand(100000, 999999);
                 $_SESSION['fldverifyotpcode'] = hash('sha256', $otpcode);
 
-                /*
                 // Send Email To User
                 $to = $useremail;
                 $subject = "Login OTP Code";
                 $message = "Hello $userfirstname,\n\nHere is your Login OTP Code: $otpcode. \n\nBest regards,\nNewstuffSA Team";
                 // Additional headers for better email security
                 $headers = array(
-                    'From: noreply@newstuffsa.com',
+                    'From: info@fcsholdix.co.za',
                     'X-Mailer: PHP/' . phpversion(),
                     'MIME-Version: 1.0',
                     'Content-Type: text/plain; charset=UTF-8'
@@ -41,15 +40,12 @@ if(isset($_POST['loginBtn'])){
                 $headers = implode("\r\n", $headers);
                 
                 if(mail($to, $subject, $message, $headers)){
-                    header('location: loginverification.php?success=Email Has Been Sent With The OTP Code. Please Enter The OTP Code Before It Expires.&flduseremail='.$useremail);
+                    header('location: ../loginverification.php?success=Email Has Been Sent With The OTP Code. Please Enter The OTP Code Before It Expires.&flduseremail='.$useremail);
                     exit;
                 } else {
                     header('location: ../login.php?error=Failed To Send Email Verification To '.$useremail);
                     exit;
-                }*/
-                
-                header('location: loginverification.php?success='.$otpcode.' Email Has Been Sent With The OTP Code. Please Enter The OTP Code Before It Expires.&flduseremail='.$useremail);
-                exit;
+                }
             } else {
                 // Password doesn't match
                 header('location: ../login.php?error=Invalid Password!');

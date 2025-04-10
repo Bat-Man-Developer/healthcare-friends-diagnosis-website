@@ -63,7 +63,7 @@ if(isset($_POST['loginVerificationBtn'])){
                 $message = "Hello $userfirstname,\n\nYou have successfully logged in to your account.\n\nBest regards,\nNewstuffSA Team";
                 // Additional headers for better email security
                 $headers = array(
-                    'From: noreply@newstuffsa.com',
+                    'From: info@fcsholdix.co.za',
                     'X-Mailer: PHP/' . phpversion(),
                     'MIME-Version: 1.0',
                     'Content-Type: text/plain; charset=UTF-8'

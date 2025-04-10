@@ -774,14 +774,32 @@ include("server/getregistrationverification.php");
     <div class="register-container">
         <div class="register-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
-            <div class="error-message" id="error-message"></div>
-            <form id="register-form" action="registrationverification.php" method="POST">
+                <!--------- Website Message ------------>
+                <?php if(isset($_GET['error'])){ ?>
+                    <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
+                <?php } ?>
+                <?php if(isset($_GET['success'])){ ?>
+                    <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
+                <?php } ?>
+				<form id="register-form" action="registrationverification.php" method="POST">
                 <div class="form-grid">
                 <div class="form-group  full-width">
                     <label for="registrationotpcode">OTP Code
                         <input type="text" class="form-input" id="registrationotpcode" name="flduserotpcode" placeholder="OTP Code" required/>
                     </label>
                 </div>
+                <input type="hidden" name="flduserimage" value="unknownimage.png" required/>
+                <input type="hidden" name="flduserfirstname" value="<?php echo $_GET['flduserfirstname']; ?>" required/>
+                <input type="hidden" name="flduserlastname" value="<?php echo $_GET['flduserlastname']; ?>" required/>
+                <input type="hidden" name="fldusercountry" value="<?php echo $_GET['fldusercountry']; ?>" required/>
+                <input type="hidden" name="flduserzone" value="<?php echo $_GET['flduserzone']; ?>" required/>
+                <input type="hidden" name="fldusercity" value="<?php echo $_GET['fldusercity']; ?>" required/>
+                <input type="hidden" name="flduserlocalarea" value="<?php echo $_GET['flduserlocalarea']; ?>" required/>
+                <input type="hidden" name="flduserstreetaddress" value="<?php echo $_GET['flduserstreetaddress']; ?>" required/>
+                <input type="hidden" name="flduserpostalcode" value="<?php echo $_GET['flduserpostalcode']; ?>" required/>
+                <input type="hidden" name="flduseremail" value="<?php echo $_GET['flduseremail']; ?>" required/>
+                <input type="hidden" name="flduserphonenumber" value="<?php echo $_GET['flduserphonenumber']; ?>" required/>
+                <input type="hidden" name="flduserpassword" value="<?php echo $_GET['flduserpassword']; ?>" required/>
                 <button type="submit" name="registrationVerificationBtn" class="form-button">Create Account</button>
             </form>
         </div>

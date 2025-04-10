@@ -774,8 +774,14 @@ include("server/getregistration.php");
     <div class="register-container">
         <div class="register-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
-            <div class="error-message" id="error-message"></div>
-            <form id="register-form" action="registration.php" method="POST">
+                <!--------- Website Message ------------>
+                <?php if(isset($_GET['error'])){ ?>
+                    <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
+                <?php } ?>
+                <?php if(isset($_GET['success'])){ ?>
+                    <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
+                <?php } ?>
+				<form id="register-form" action="registration.php" method="POST">
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="registrationfirstname">First Name</label>

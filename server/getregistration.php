@@ -61,7 +61,7 @@ if(isset($_POST['registrationBtn'])){
       // Send Email To User
       $to = $useremail;
       $subject = "Registration OTP Code";
-      $message = "Hello $userfirstname,\n\nHere is your Registration OTP Code: $otpcode. \n\nBest regards,\nNewstuffSA Team";
+      $message = "Hello $userfirstname,\n\nHere is your Registration OTP Code: $otpcode. \n\nBest regards,\nHealthcare Friends Team";
       // Additional headers for better email security
       $headers = array(
         'From: info@fcsholdix.co.za',

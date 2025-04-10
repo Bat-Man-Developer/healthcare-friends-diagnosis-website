@@ -60,7 +60,7 @@ if(isset($_POST['loginVerificationBtn'])){
                 // Send Email To User
                 $to = $useremail;
                 $subject = "Successful Login";
-                $message = "Hello $userfirstname,\n\nYou have successfully logged in to your account.\n\nBest regards,\nNewstuffSA Team";
+                $message = "Hello $userfirstname,\n\nYou have successfully logged in to your account.\n\nBest regards,\nHealthcare Friends Team";
                 // Additional headers for better email security
                 $headers = array(
                     'From: info@fcsholdix.co.za',

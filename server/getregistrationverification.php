@@ -112,7 +112,7 @@ if(isset($_POST['registrationVerificationBtn'])){
                         // Send Email To User
                         $to = $useremail;
                         $subject = "Successful Registration";
-                        $message = "Hello $userfirstname,\n\nYou have successfully registered.\n\nBest regards,\nNewstuffSA Team";
+                        $message = "Hello $userfirstname,\n\nYou have successfully registered.\n\nBest regards,\nHealthcare Friends Team";
                         // Additional headers for better email security
                         $headers = array(
                             'From: info@fcsholdix.co.za',

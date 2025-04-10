@@ -791,8 +791,14 @@ include("server/getloginverification.php");
         
         <div class="login-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
-            <div class="error-message" id="error-message"></div>
-            <form id="login-form" action="loginverification.php" method="POST">
+                <!--------- Website Message ------------>
+                <?php if(isset($_GET['error'])){ ?>
+                    <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
+                <?php } ?>
+                <?php if(isset($_GET['success'])){ ?>
+                    <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
+                <?php } ?>
+				<form id="login-form" action="loginverification.php" method="POST">
                 <div class="form-group">
                     <label for="otpcode">OTP Code</label>
                     <input type="number" id="otpcode" name="flduserotpcode" class="form-input" required>

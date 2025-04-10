@@ -638,7 +638,7 @@ include("server/getlogin.php");
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 8rem;
             background: linear-gradient(135deg, #F0F7FF 0%, #E8F0FE 100%);
         }
 

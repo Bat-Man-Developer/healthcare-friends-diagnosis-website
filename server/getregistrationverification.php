@@ -69,27 +69,16 @@ if(isset($_POST['registrationVerificationBtn'])){
             //if user details was added succesfully
             if($stmt1->execute()){
                 $userid = $stmt1->insert_id;
-                $orderid = $userid*-1;
-            }
-            else{//user could not be added
-                header('location: ../registrationverification.php?error=Could Not Create An Account At The Moment&flduserfirstname='.$userfirstname.'&flduserlastname='.$userlastname.'&fldusercountry='.$usercountry.'&flduserzone='.$userzone.'&fldusercity='.$usercity.'&flduserlocalarea='.$userlocalarea.'&flduserstreetaddress='.$userstreetaddress.'&flduserpostalcode='.$userpostalcode.'&flduseremail='.$useremail.'&flduserphonenumber='.$userphonenumber.'&flduserpassword='.$userpassword);
-                exit;
-            }
 
-            //Create New Customer Billing Address
-            $stmt2 = $conn->prepare("INSERT INTO customerbillingaddress (fldbillingid,fldorderid,fldbillingfirstname,fldbillinglastname,fldbillingstreetaddress,fldbillinglocalarea,fldbillingcity,fldbillingzone,fldbillingcountry,fldbillingpostalcode,fldbillingemail,fldbillingphonenumber)
-                    VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
-            $stmt2->bind_param('iissssssssss',$userid,$orderid,$userfirstname,$userlastname,$userstreetaddress,$userlocalarea,$usercity,$userzone,$usercountry,$userpostalcode,$useremail,$userphonenumber);
-            //if billing details was added succesfully
-            if($stmt2->execute()){
-                $stmt3 = $conn->prepare("SELECT flduserid,flduserimage,flduserfirstname,flduserlastname,flduserstreetaddress,flduserlocalarea,fldusercity,flduserzone,fldusercountry,flduserpostalcode,flduseremail,flduserphonenumber,flduserpassword FROM users WHERE flduseremail = ? LIMIT 1");
-                $stmt3->bind_param('s',$useremail);
-                if($stmt3->execute()){
-                    $stmt3->bind_result($userid,$userimage,$userfirstname,$userlastname,$userstreetaddress,$userlocalarea,$usercity,$userzone,$usercountry,$userpostalcode,$useremail,$userphonenumber,$userpassword);
-                    $stmt3->store_result();
+                // Get user
+                $stmt2 = $conn->prepare("SELECT flduserid,flduserimage,flduserfirstname,flduserlastname,flduserstreetaddress,flduserlocalarea,fldusercity,flduserzone,fldusercountry,flduserpostalcode,flduseremail,flduserphonenumber,flduserpassword FROM users WHERE flduseremail = ? LIMIT 1");
+                $stmt2->bind_param('s',$useremail);
+                if($stmt2->execute()){
+                    $stmt2->bind_result($userid,$userimage,$userfirstname,$userlastname,$userstreetaddress,$userlocalarea,$usercity,$userzone,$usercountry,$userpostalcode,$useremail,$userphonenumber,$userpassword);
+                    $stmt2->store_result();
                     //If user is found in database
-                    if($stmt3->num_rows() == 1){
-                        $stmt3->fetch();
+                    if($stmt2->num_rows() == 1){
+                        $stmt2->fetch();
                         // Initialize Rate Limit
                         $_SESSION['login_attempts'] = 0;
                         $_SESSION['last_login_attempt'] = time();
@@ -138,11 +127,12 @@ if(isset($_POST['registrationVerificationBtn'])){
                         header('location: ../registrationverification.php?error=Email Not Found!&flduserfirstname='.$userfirstname.'&flduserlastname='.$userlastname.'&fldusercountry='.$usercountry.'&flduserzone='.$userzone.'&fldusercity='.$usercity.'&flduserlocalarea='.$userlocalarea.'&flduserstreetaddress='.$userstreetaddress.'&flduserpostalcode='.$userpostalcode.'&flduseremail='.$useremail.'&flduserphonenumber='.$userphonenumber.'&flduserpassword='.$userpassword);
                         exit;
                     }
-                } else{
-                    header('location: ../registrationverification.php?error=Something Went Wrong, Try Again!!&flduserfirstname='.$userfirstname.'&flduserlastname='.$userlastname.'&fldusercountry='.$usercountry.'&flduserzone='.$userzone.'&fldusercity='.$usercity.'&flduserlocalarea='.$userlocalarea.'&flduserstreetaddress='.$userstreetaddress.'&flduserpostalcode='.$userpostalcode.'&flduseremail='.$useremail.'&flduserphonenumber='.$userphonenumber.'&flduserpassword='.$userpassword);
+                } else{//user could not be added
+                    header('location: ../registrationverification.php?error=Could Not Create An Account At The Moment&flduserfirstname='.$userfirstname.'&flduserlastname='.$userlastname.'&fldusercountry='.$usercountry.'&flduserzone='.$userzone.'&fldusercity='.$usercity.'&flduserlocalarea='.$userlocalarea.'&flduserstreetaddress='.$userstreetaddress.'&flduserpostalcode='.$userpostalcode.'&flduseremail='.$useremail.'&flduserphonenumber='.$userphonenumber.'&flduserpassword='.$userpassword);
                     exit;
                 }
-            } else{//billing details could not be added
+            }
+            else{//user could not be added
                 header('location: ../registrationverification.php?error=Could Not Create An Account At The Moment&flduserfirstname='.$userfirstname.'&flduserlastname='.$userlastname.'&fldusercountry='.$usercountry.'&flduserzone='.$userzone.'&fldusercity='.$usercity.'&flduserlocalarea='.$userlocalarea.'&flduserstreetaddress='.$userstreetaddress.'&flduserpostalcode='.$userpostalcode.'&flduseremail='.$useremail.'&flduserphonenumber='.$userphonenumber.'&flduserpassword='.$userpassword);
                 exit;
             }

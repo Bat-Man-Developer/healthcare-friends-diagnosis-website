@@ -879,26 +879,6 @@ include("server/getregistration.php");
             }
         }
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                showError('Passwords do not match');
-                return;
-            }
-
-            // Here you would typically submit the form
-            form.submit();
-        });
-
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-        }
-
         // mobile navigation
         const mobileNavToggle = document.querySelector('.hamburger-menu');
         const mobileNav = document.querySelector('.mobile-nav');
@@ -936,6 +916,16 @@ include("server/getregistration.php");
                 document.body.style.overflow = '';
             }
         });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            // Shake animation
+            errorMessage.style.animation = 'none';
+            errorMessage.offsetHeight; // Trigger reflow
+            errorMessage.style.animation = 'shake 0.5s ease-in-out';
+        }
     </script>
 
     <script>

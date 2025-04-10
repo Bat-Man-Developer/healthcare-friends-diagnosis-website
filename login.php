@@ -811,16 +811,6 @@ include("server/getlogin.php");
     </div>
 
     <script>
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-            
-            // Shake animation
-            errorMessage.style.animation = 'none';
-            errorMessage.offsetHeight; // Trigger reflow
-            errorMessage.style.animation = 'shake 0.5s ease-in-out';
-        }
-
         // mobile navigation
         const mobileNavToggle = document.querySelector('.hamburger-menu');
         const mobileNav = document.querySelector('.mobile-nav');
@@ -858,6 +848,16 @@ include("server/getlogin.php");
                 document.body.style.overflow = '';
             }
         });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            // Shake animation
+            errorMessage.style.animation = 'none';
+            errorMessage.offsetHeight; // Trigger reflow
+            errorMessage.style.animation = 'shake 0.5s ease-in-out';
+        }
     </script>
 </body>
 </html>

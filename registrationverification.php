@@ -788,53 +788,6 @@ include("server/getregistrationverification.php");
     </div>
 
     <script>
-        const form = document.getElementById('register-form');
-        const errorMessage = document.getElementById('error-message');
-        const passwordInput = document.getElementById('password');
-        const passwordStrength = document.getElementById('passwordStrength');
-
-        passwordInput.addEventListener('input', updatePasswordStrength);
-
-        function updatePasswordStrength() {
-            const password = passwordInput.value;
-            let strength = 0;
-
-            if (password.length >= 8) strength += 25;
-            if (password.match(/[A-Z]/)) strength += 25;
-            if (password.match(/[0-9]/)) strength += 25;
-            if (password.match(/[^A-Za-z0-9]/)) strength += 25;
-
-            passwordStrength.style.width = `${strength}%`;
-            
-            if (strength < 50) {
-                passwordStrength.style.backgroundColor = '#FC8181';
-            } else if (strength < 75) {
-                passwordStrength.style.backgroundColor = '#F6E05E';
-            } else {
-                passwordStrength.style.backgroundColor = '#68D391';
-            }
-        }
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                showError('Passwords do not match');
-                return;
-            }
-
-            // Here you would typically submit the form
-            form.submit();
-        });
-
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-        }
-
         // mobile navigation
         const mobileNavToggle = document.querySelector('.hamburger-menu');
         const mobileNav = document.querySelector('.mobile-nav');
@@ -872,6 +825,17 @@ include("server/getregistrationverification.php");
                 document.body.style.overflow = '';
             }
         });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            // Shake animation
+            errorMessage.style.animation = 'none';
+            errorMessage.offsetHeight; // Trigger reflow
+            errorMessage.style.animation = 'shake 0.5s ease-in-out';
+        }
+
     </script>
 </body>
 </html>

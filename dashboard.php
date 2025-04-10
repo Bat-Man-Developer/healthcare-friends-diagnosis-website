@@ -984,14 +984,15 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
         </ul>
     </div>
 
+    <!--------- Website Message ------------>
+    <?php if(isset($_GET['error'])){ ?>
+        <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
+    <?php } ?>
+    <?php if(isset($_GET['success'])){ ?>
+        <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
+    <?php } ?>
+
     <div class="dashboard-container">
-        <!--------- Website Message ------------>
-        <?php if(isset($_GET['error'])){ ?>
-            <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
-        <?php } ?>
-        <?php if(isset($_GET['success'])){ ?>
-            <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
-        <?php } ?>
         <aside class="sidebar"><br><br><br>
             <div class="user-info">
                 <div class="user-avatar">

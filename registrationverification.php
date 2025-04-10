@@ -802,17 +802,19 @@ include("server/getregistrationverification.php");
         </ul>
     </div>
 
+    <!--------- Website Message ------------>
+    <?php if(isset($_GET['error'])){ ?>
+        <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
+    <?php } ?>
+    <?php if(isset($_GET['success'])){ ?>
+        <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
+    <?php } ?>
+	
+
     <div class="register-container">
         <div class="register-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
-                <!--------- Website Message ------------>
-                <?php if(isset($_GET['error'])){ ?>
-                    <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
-                <?php } ?>
-                <?php if(isset($_GET['success'])){ ?>
-                    <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
-                <?php } ?>
-				<form id="register-form" action="registrationverification.php" method="POST">
+                <form id="register-form" action="registrationverification.php" method="POST">
                 <div class="form-grid">
                 <div class="form-group  full-width">
                     <label for="registrationotpcode">OTP Code

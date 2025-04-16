@@ -22,6 +22,13 @@ header("X-XSS-Protection: 1; mode=block");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 //header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
 
+//if user has already logged in then take user to account page
+if(!isset($_SESSION['logged_in'])){
+	header('location: login.php');
+	exit;
+}
+
+include('server/getlogout');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -1021,6 +1028,11 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i>⚙️</i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="dashboard.php?logout=1" class="nav-link">
+                            <i>🚪</i> Logout
                         </a>
                     </li>
                 </ul>

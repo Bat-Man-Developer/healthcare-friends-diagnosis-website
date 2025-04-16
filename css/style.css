@@ -165,6 +165,17 @@ body {
     border-top: 1px solid rgba(255,255,255,0.1);
 }
 
+.countdown {
+    text-align: center;
+    font-size: clamp(1rem, 4vw, 1.25rem); /* Responsive font size between 16px and 20px */
+    color: #ff0000;
+    margin-bottom: 1rem; /* Using relative unit instead of fixed pixels */
+    padding: 0.5rem; /* Added padding for better spacing on mobile */
+    width: 100%;
+    max-width: 100%;
+    display: block; /* Ensures full width on all devices */
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .nav-links {

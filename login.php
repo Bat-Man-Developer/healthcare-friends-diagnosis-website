@@ -22,6 +22,16 @@ header("X-XSS-Protection: 1; mode=block");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 //header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
 
+//if user has already logged in then take user to account page
+if(isset($_SESSION['logged_in'])){
+	header('location: dashboard.php');
+	exit;
+}
+
+if(isset($_GET['bool']) && $_GET['bool'] == true || isset($_SESSION['last_login_attempt']) && (time() - $_SESSION['last_login_attempt']) < 240){
+	unset($_SESSION['fldverifyotpcode']);
+}
+
 include("server/getlogin.php");
 ?>
 <!DOCTYPE html>
@@ -804,7 +814,7 @@ include("server/getlogin.php");
                 </div>
                 <button type="submit" name="loginBtn" class="form-button">Login</button>
                 <div class="form-footer">
-                    <p>Don't have an account? <a href="registration.php">Sign up</a></p>
+                    <p>Don't have an account? <a href="registration.php">Sign up</a></p><br>
                     <a href="resetpassword.php">Forgot Password?</a>
                 </div>
             </form>

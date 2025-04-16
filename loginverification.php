@@ -22,6 +22,19 @@ header("X-XSS-Protection: 1; mode=block");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 //header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
 
+//if user has already logged in then take user to account page
+if(isset($_SESSION['logged_in'])){
+	header('location: dashboard.php');
+	exit;
+}
+
+if(!isset($_GET['flduseremail'])){ 
+	if(!isset($_POST['flduseremail'])){ 
+		header('location: login.php?error=Something Went Wrong. User Not Logged In!');
+		exit;
+	}
+}
+
 include("server/getloginverification.php");
 ?>
 <!DOCTYPE html>
@@ -387,6 +400,17 @@ include("server/getloginverification.php");
         .footer-bottom p {
             color: #718096;
             font-size: 0.9rem;
+        }
+
+        .countdown {
+            text-align: center;
+            font-size: clamp(1rem, 4vw, 1.25rem); /* Responsive font size between 16px and 20px */
+            color: #ff0000;
+            margin-bottom: 1rem; /* Using relative unit instead of fixed pixels */
+            padding: 0.5rem; /* Added padding for better spacing on mobile */
+            width: 100%;
+            max-width: 100%;
+            display: block; /* Ensures full width on all devices */
         }
 
         @media (max-width: 768px) {
@@ -787,7 +811,7 @@ include("server/getloginverification.php");
     <?php if(isset($_GET['success'])){ ?>
         <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
     <?php } ?>
-	
+	<div class="countdown" id="countdown"></div>
 
     <div class="login-container">
         <div class="login-card">
@@ -805,6 +829,53 @@ include("server/getloginverification.php");
     </div>
 
     <script>
+        // Function to get the expiry time from localStorage or set a new one
+        function getOrSetExpiryTime() {
+            let expiryTime = localStorage.getItem('otpExpiryTime');
+            
+            // If no expiry time is set or if it's expired, set a new one
+            if (!expiryTime || new Date().getTime() > parseInt(expiryTime)) {
+                expiryTime = new Date().getTime() + (240 * 1000); // 4 minutes from now
+                localStorage.setItem('otpExpiryTime', expiryTime);
+            }
+            
+            return parseInt(expiryTime);
+        }
+
+        // Get or set the expiry time
+        const expiryTime = getOrSetExpiryTime();
+
+        // Update the countdown every second
+        const countdownTimer = setInterval(function() {
+            // Calculate remaining time
+            const currentTime = new Date().getTime();
+            const timeLeft = Math.max(0, Math.floor((expiryTime - currentTime) / 1000));
+            
+            // Calculate minutes and seconds
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            
+            // Display the time remaining
+            document.getElementById('countdown').innerHTML = `Time remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            // When timer reaches zero
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                localStorage.removeItem('otpExpiryTime');
+                window.location.href = 'login.php?error=OTP Code Expired. Please Try Again.&bool='+true;
+            }
+        }, 1000);
+
+        // Clean up function to remove expired timer
+        window.onunload = function() {
+            const currentTime = new Date().getTime();
+            const storedExpiryTime = localStorage.getItem('otpExpiryTime');
+            
+            if (storedExpiryTime && currentTime > parseInt(storedExpiryTime)) {
+                localStorage.removeItem('otpExpiryTime');
+            }
+        };
+        
         // mobile navigation
         const mobileNavToggle = document.querySelector('.hamburger-menu');
         const mobileNav = document.querySelector('.mobile-nav');

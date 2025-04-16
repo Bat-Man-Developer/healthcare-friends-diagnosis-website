@@ -823,7 +823,7 @@ include("server/getregistration.php");
     <div class="register-container">
         <div class="register-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
-                <form id="register-form" action="registration.php" method="POST">
+            <form id="register-form" action="registration.php" method="POST">
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="registrationfirstname">First Name</label>

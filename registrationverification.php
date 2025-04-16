@@ -719,20 +719,6 @@ include("server/getregistrationverification.php");
             border-color: var(--primary);
         }
 
-        .password-strength {
-            height: 5px;
-            background: #E2E8F0;
-            border-radius: 5px;
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-
-        .password-strength-bar {
-            height: 100%;
-            width: 0;
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-
         .form-button {
             width: 100%;
             padding: 1rem;
@@ -832,12 +818,13 @@ include("server/getregistrationverification.php");
     <?php if(isset($_GET['success'])){ ?>
         <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
     <?php } ?>
-	<div class="countdown" id="countdown"></div>
-
+	
     <div class="register-container">
         <div class="register-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
-                <form id="register-form" action="registrationverification.php" method="POST">
+            <div class="countdown" id="countdown"></div>
+            
+            <form id="register-form" action="registrationverification.php" method="POST">
                 <div class="form-grid">
                 <div class="form-group  full-width">
                     <label for="registrationotpcode">OTP Code
@@ -856,7 +843,7 @@ include("server/getregistrationverification.php");
                 <input type="hidden" name="flduseremail" value="<?php echo $_GET['flduseremail']; ?>" required/>
                 <input type="hidden" name="flduserphonenumber" value="<?php echo $_GET['flduserphonenumber']; ?>" required/>
                 <input type="hidden" name="flduserpassword" value="<?php echo $_GET['flduserpassword']; ?>" required/>
-                <button type="submit" name="registrationVerificationBtn" class="form-button">Create Account</button>
+                <button type="submit" name="registrationVerificationBtn" class="form-button">Verify</button>
             </form>
         </div>
     </div>

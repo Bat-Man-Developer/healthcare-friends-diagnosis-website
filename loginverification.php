@@ -811,11 +811,12 @@ include("server/getloginverification.php");
     <?php if(isset($_GET['success'])){ ?>
         <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
     <?php } ?>
-	<div class="countdown" id="countdown"></div>
-
+	
     <div class="login-container">
         <div class="login-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
+                <div class="countdown" id="countdown"></div>
+
                 <form id="login-form" action="loginverification.php" method="POST">
                 <div class="form-group">
                     <label for="otpcode">OTP Code</label>
@@ -823,7 +824,6 @@ include("server/getloginverification.php");
                 </div>
                 <input type="hidden" name="flduseremail" value="<?php echo $_GET['flduseremail']; ?>">
 				<button type="submit" name="loginVerificationBtn" class="form-button">Verify</button><br><br>
-                <p style="text-align: center;font-size: small"><a href="loginverification.php">Resend OTP Code</a></p>
             </form>
         </div>
     </div>

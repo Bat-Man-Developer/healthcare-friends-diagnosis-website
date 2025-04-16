@@ -18,7 +18,7 @@ if(isset($_SESSION['logged_in'])){
     unset($_SESSION['flduseridnumber']);
     unset($_SESSION['logged_in']);
     //Go to login
-    header('location: ../login.php');
+    header('location: ../login.php?error=User Logged Out!');
     exit;
   }
 }

@@ -28,7 +28,7 @@ if(!isset($_SESSION['logged_in'])){
 	exit;
 }
 
-include('server/getlogout');
+include('server/getlogout.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1287,7 +1287,7 @@ if(!isset($_SESSION['logged_in'])){
                         .map(cb => cb.value),
                     duration: document.getElementById('duration').value,
                     description: document.getElementById('description').value,
-                    userId: <?php echo $_SESSION['flduserid']; ?>
+                    userId: '<?php echo isset($_SESSION["flduserid"]) ? $_SESSION["flduserid"] : ""; ?>'
                 };
 
                 try {
@@ -1299,8 +1299,16 @@ if(!isset($_SESSION['logged_in'])){
                         body: JSON.stringify(formData)
                     });
 
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
                     const result = await response.json();
                     
+                    if (result.error) {
+                        throw new Error(result.message || 'An error occurred');
+                    }
+
                     // Show results
                     const resultSection = document.getElementById('resultSection');
                     resultSection.classList.add('active');
@@ -1308,27 +1316,31 @@ if(!isset($_SESSION['logged_in'])){
                     // Update severity indicator
                     const severityFill = document.getElementById('severityFill');
                     const severityText = document.getElementById('severityText');
-                    severityFill.style.width = `${result.severity}%`;
-                    severityText.textContent = getSeverityText(result.severity);
+                    severityFill.style.width = `${result.severity || 0}%`;
+                    severityText.textContent = getSeverityText(result.severity || 0);
 
                     // Update diagnosis result
                     document.getElementById('diagnosisResult').innerHTML = `
-                        <p><strong>Possible Condition:</strong> ${result.condition}</p>
-                        <p>${result.description}</p>
+                        <p><strong>Possible Condition:</strong> ${result.condition || 'Unknown'}</p>
+                        <p>${result.description || 'No description available'}</p>
                     `;
 
                     // Update recommendations
                     const recommendationsList = document.getElementById('recommendationsList');
-                    recommendationsList.innerHTML = result.recommendations.map(rec => `
-                        <li class="recommendation-item">
-                            <div class="recommendation-icon">💡</div>
-                            <div>${rec}</div>
-                        </li>
-                    `).join('');
+                    if (result.recommendations && Array.isArray(result.recommendations)) {
+                        recommendationsList.innerHTML = result.recommendations.map(rec => `
+                            <li class="recommendation-item">
+                                <div class="recommendation-icon">💡</div>
+                                <div>${rec}</div>
+                            </li>
+                        `).join('');
+                    } else {
+                        recommendationsList.innerHTML = '<li>No recommendations available</li>';
+                    }
 
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('An error occurred while processing your diagnosis');
+                    alert('An error occurred while processing your diagnosis: ' + error.message);
                 }
             });
 

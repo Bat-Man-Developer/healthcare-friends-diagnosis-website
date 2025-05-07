@@ -1,28 +1,8 @@
 <?php
 include('connection.php');
 
-// Check if it's a POST request
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
-    exit;
-}
-
-// Get POST data
-$data = json_decode(file_get_contents('php://input'), true);
-
-if (!$data) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid input data']);
-    exit;
-}
-
-// Validate required fields
-if (empty($data['mainSymptom']) || empty($data['duration'])) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Missing required fields']);
-    exit;
-}
+// Set header to return JSON
+header('Content-Type: application/json');
 
 // Function to find matching condition based on symptoms
 function findMatchingCondition($conn, $mainSymptom, $additionalSymptoms) {
@@ -79,6 +59,23 @@ function calculateSeverity($duration, $symptomCount) {
 }
 
 try {
+    // Check if it's a POST request
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception('Method not allowed');
+    }
+
+    // Get POST data
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    if (!$data) {
+        throw new Exception('Invalid input data');
+    }
+
+    // Validate required fields
+    if (empty($data['mainSymptom']) || empty($data['duration'])) {
+        throw new Exception('Missing required fields');
+    }
+
     // Find matching condition
     $matchingCondition = findMatchingCondition(
         $conn,
@@ -87,7 +84,14 @@ try {
     );
     
     if (!$matchingCondition) {
-        throw new Exception('No matching condition found');
+        // Return a default response if no condition is found
+        echo json_encode([
+            'condition' => 'Unknown Condition',
+            'description' => 'Unable to determine a specific condition based on the provided symptoms.',
+            'severity' => 30,
+            'recommendations' => ['Consult with a healthcare professional for proper diagnosis']
+        ]);
+        exit;
     }
     
     // Calculate severity
@@ -96,8 +100,11 @@ try {
         count($data['symptoms'] ?? []) + 1
     );
     
-    // Convert recommendations string to array
-    $recommendations = explode(',', $matchingCondition['fldconditionrecommendations']);
+    // Ensure recommendations is an array
+    $recommendations = !empty($matchingCondition['fldconditionrecommendations']) 
+        ? explode(',', $matchingCondition['fldconditionrecommendations'])
+        : ['Consult with a healthcare professional'];
+    
     $recommendations = array_map('trim', $recommendations);
     
     // Save diagnosis to database if user is logged in
@@ -109,15 +116,17 @@ try {
             (?, ?, NOW())
         ");
         
-        $stmt->bind_param("ii", $data['userId'], $matchingCondition['fldconditionid']);
-        $stmt->execute();
-        $stmt->close();
+        if ($stmt) {
+            $stmt->bind_param("ii", $data['userId'], $matchingCondition['fldconditionid']);
+            $stmt->execute();
+            $stmt->close();
+        }
     }
     
     // Return the result
     echo json_encode([
-        'condition' => $matchingCondition['fldconditionname'],
-        'description' => $matchingCondition['fldconditiondescription'],
+        'condition' => $matchingCondition['fldconditionname'] ?? 'Unknown',
+        'description' => $matchingCondition['fldconditiondescription'] ?? 'No description available',
         'severity' => round($severity),
         'recommendations' => $recommendations
     ]);
@@ -125,10 +134,12 @@ try {
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode([
-        'error' => 'An error occurred while processing the diagnosis',
+        'error' => true,
         'message' => $e->getMessage()
     ]);
 }
 
 // Close database connection
-$conn->close();
+if (isset($conn)) {
+    $conn->close();
+}

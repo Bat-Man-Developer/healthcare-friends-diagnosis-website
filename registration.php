@@ -689,6 +689,7 @@ include("server/getregistration.php");
             position: relative;
             overflow: hidden;
             animation: slideIn 0.5s ease-out;
+            margin-top: 2%;
         }
 
         .register-card::before {

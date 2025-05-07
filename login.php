@@ -672,22 +672,24 @@ include("server/getlogin.php");
         
         .login-container {
             min-height: 100vh;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8rem;
+            padding: clamp(1rem, 5vw, 8rem);
             background: linear-gradient(135deg, #F0F7FF 0%, #E8F0FE 100%);
         }
 
         .login-card {
             background: white;
-            padding: 3rem;
-            border-radius: 20px;
+            padding: clamp(1.5rem, 4vw, 3rem);
+            border-radius: clamp(12px, 2vw, 20px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
+            width: min(90%, 450px);
+            height: auto;
             position: relative;
             overflow: hidden;
+            margin: 2%;
         }
 
         .login-card::before {
@@ -696,27 +698,29 @@ include("server/getlogin.php");
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
+            height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
             color: var(--dark);
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
         }
 
         .form-input {
             width: 100%;
-            padding: 0.8rem;
+            padding: clamp(0.6rem, 1.5vw, 0.8rem);
             border: 2px solid #E2E8F0;
-            border-radius: 10px;
+            border-radius: clamp(8px, 1.5vw, 10px);
             transition: border-color 0.3s ease;
             outline: none;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
         }
 
         .form-input:focus {
@@ -725,13 +729,13 @@ include("server/getlogin.php");
 
         .form-button {
             width: 100%;
-            padding: 1rem;
+            padding: clamp(0.8rem, 2vw, 1rem);
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: clamp(8px, 1.5vw, 10px);
             cursor: pointer;
-            font-size: 1rem;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -742,7 +746,8 @@ include("server/getlogin.php");
 
         .form-footer {
             text-align: center;
-            margin-top: 1.5rem;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
         }
 
         .form-footer a {
@@ -753,10 +758,11 @@ include("server/getlogin.php");
         .error-message {
             background: #FED7D7;
             color: #C53030;
-            padding: 0.8rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
+            padding: clamp(0.6rem, 1.5vw, 0.8rem);
+            border-radius: clamp(8px, 1.5vw, 10px);
+            margin-bottom: clamp(0.8rem, 1.5vw, 1rem);
             display: none;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
         }
 
         @keyframes shake {

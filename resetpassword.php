@@ -835,7 +835,11 @@ include("server/getresetpassword.php");
                     <label for="email">Email</label>
                     <input type="email" id="email" name="flduseremail" class="form-input" required>
                 </div>
-                <button type="submit" name="resetpasswordBtn" class="form-button">Send OTP Code</button>
+                <button type="submit" name="resetPasswordBtn" class="form-button">Reset Password</button>
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="registration.php">Sign up</a></p><br>
+                    <a href="login.php">Back to login</a>
+                </div>
             </form>
         </div>
     </div>

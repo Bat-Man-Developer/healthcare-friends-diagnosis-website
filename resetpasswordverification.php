@@ -28,11 +28,14 @@ if(isset($_SESSION['logged_in'])){
 	exit;
 }
 
-if(isset($_GET['bool']) && $_GET['bool'] == true || isset($_SESSION['last_login_attempt']) && (time() - $_SESSION['last_login_attempt']) < 240){
-	unset($_SESSION['fldverifyotpcode']);
+if(!isset($_GET['flduseremail'])){ 
+	if(!isset($_POST['flduseremail'])){ 
+		header('location: login.php?error=Something Went Wrong. User Not Logged In!');
+		exit;
+	}
 }
 
-include("server/getresetpassword.php");
+include("server/getresetpasswordverification.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -426,6 +429,17 @@ include("server/getresetpassword.php");
             font-size: 0.9rem;
         }
 
+        .countdown {
+            text-align: center;
+            font-size: clamp(1rem, 4vw, 1.25rem); /* Responsive font size between 16px and 20px */
+            color: #ff0000;
+            margin-bottom: 1rem; /* Using relative unit instead of fixed pixels */
+            padding: 0.5rem; /* Added padding for better spacing on mobile */
+            width: 100%;
+            max-width: 100%;
+            display: block; /* Ensures full width on all devices */
+        }
+
         @media (max-width: 768px) {
             .footer {
                 padding: 3rem 1rem 1rem;
@@ -675,7 +689,7 @@ include("server/getresetpassword.php");
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8rem;
+            padding: 2rem;
             background: linear-gradient(135deg, #F0F7FF 0%, #E8F0FE 100%);
         }
 
@@ -816,7 +830,7 @@ include("server/getresetpassword.php");
             <?php endif; ?>
         </ul>
     </div>
-
+    
     <!--------- Website Message ------------>
     <?php if(isset($_GET['error'])){ ?>
         <p class="text-center" id="webmessage_red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
@@ -825,22 +839,78 @@ include("server/getresetpassword.php");
         <p class="text-center" id="webmessage_green"><?php if(isset($_GET['success'])){ echo $_GET['success']; }?></p>
     <?php } ?>
 	
-
     <div class="login-container">
         <div class="login-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
-            <div class="error-message" id="error-message"></div>
-            <form id="login-form" action="resetpassword.php" method="POST">
+                <div class="countdown" id="countdown"></div>
+
+                <form id="login-form" action="resetpasswordverification.php" method="POST">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="flduseremail" class="form-input" required>
+                    <label for="otpcode">OTP Code</label>
+                    <input type="number" id="otpcode" name="flduserotpcode" class="form-input" required>
                 </div>
-                <button type="submit" name="resetpasswordBtn" class="form-button">Send OTP Code</button>
+                <div class="form-group">
+                    <label for="newpassword">New Password</label>
+                    <input type="password" id="newpassword" name="flduserpassword" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="otpcode">Confirm Password</label>
+                    <input type="password" id="confirmpassword" name="flduserconfirmpassword" class="form-input" required>
+                </div>
+                <input type="hidden" name="flduseremail" value="<?php echo $_GET['flduseremail']; ?>">
+				<button type="submit" name="resetPasswordVerificationBtn" class="form-button">Verify</button>
             </form>
         </div>
     </div>
 
     <script>
+        // Function to get the expiry time from localStorage or set a new one
+        function getOrSetExpiryTime() {
+            let expiryTime = localStorage.getItem('otpExpiryTime');
+            
+            // If no expiry time is set or if it's expired, set a new one
+            if (!expiryTime || new Date().getTime() > parseInt(expiryTime)) {
+                expiryTime = new Date().getTime() + (240 * 1000); // 4 minutes from now
+                localStorage.setItem('otpExpiryTime', expiryTime);
+            }
+            
+            return parseInt(expiryTime);
+        }
+
+        // Get or set the expiry time
+        const expiryTime = getOrSetExpiryTime();
+
+        // Update the countdown every second
+        const countdownTimer = setInterval(function() {
+            // Calculate remaining time
+            const currentTime = new Date().getTime();
+            const timeLeft = Math.max(0, Math.floor((expiryTime - currentTime) / 1000));
+            
+            // Calculate minutes and seconds
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            
+            // Display the time remaining
+            document.getElementById('countdown').innerHTML = `Time remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            // When timer reaches zero
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                localStorage.removeItem('otpExpiryTime');
+                window.location.href = 'login.php?error=OTP Code Expired. Please Try Again.&bool='+true;
+            }
+        }, 1000);
+
+        // Clean up function to remove expired timer
+        window.onunload = function() {
+            const currentTime = new Date().getTime();
+            const storedExpiryTime = localStorage.getItem('otpExpiryTime');
+            
+            if (storedExpiryTime && currentTime > parseInt(storedExpiryTime)) {
+                localStorage.removeItem('otpExpiryTime');
+            }
+        };
+        
         // mobile navigation
         const mobileNavToggle = document.querySelector('.hamburger-menu');
         const mobileNav = document.querySelector('.mobile-nav');

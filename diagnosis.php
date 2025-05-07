@@ -1276,129 +1276,130 @@ if(!isset($_SESSION['logged_in'])){
                 </ul>
             </div>
         </main>
-    </div>
 
-    <script>
-        document.getElementById('diagnosisForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        <script>
+            document.getElementById('diagnosisForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-            const formData = {
-                mainSymptom: document.getElementById('mainSymptom').value,
-                symptoms: Array.from(document.querySelectorAll('input[name="symptoms"]:checked'))
-                    .map(cb => cb.value),
-                duration: document.getElementById('duration').value,
-                description: document.getElementById('description').value
-            };
+                const formData = {
+                    mainSymptom: document.getElementById('mainSymptom').value,
+                    symptoms: Array.from(document.querySelectorAll('input[name="symptoms"]:checked'))
+                        .map(cb => cb.value),
+                    duration: document.getElementById('duration').value,
+                    description: document.getElementById('description').value,
+                    userId: <?php echo $_SESSION['flduserid']; ?>
+                };
 
-            try {
-                const response = await fetch('/api/diagnose', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
+                try {
+                    const response = await fetch('server/getdiagnosis.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
 
-                const result = await response.json();
-                
-                // Show results
-                const resultSection = document.getElementById('resultSection');
-                resultSection.classList.add('active');
+                    const result = await response.json();
+                    
+                    // Show results
+                    const resultSection = document.getElementById('resultSection');
+                    resultSection.classList.add('active');
 
-                // Update severity indicator
-                const severityFill = document.getElementById('severityFill');
-                const severityText = document.getElementById('severityText');
-                severityFill.style.width = `${result.severity}%`;
-                severityText.textContent = getSeverityText(result.severity);
+                    // Update severity indicator
+                    const severityFill = document.getElementById('severityFill');
+                    const severityText = document.getElementById('severityText');
+                    severityFill.style.width = `${result.severity}%`;
+                    severityText.textContent = getSeverityText(result.severity);
 
-                // Update diagnosis result
-                document.getElementById('diagnosisResult').innerHTML = `
-                    <p><strong>Possible Condition:</strong> ${result.condition}</p>
-                    <p>${result.description}</p>
-                `;
+                    // Update diagnosis result
+                    document.getElementById('diagnosisResult').innerHTML = `
+                        <p><strong>Possible Condition:</strong> ${result.condition}</p>
+                        <p>${result.description}</p>
+                    `;
 
-                // Update recommendations
-                const recommendationsList = document.getElementById('recommendationsList');
-                recommendationsList.innerHTML = result.recommendations.map(rec => `
-                    <li class="recommendation-item">
-                        <div class="recommendation-icon">💡</div>
-                        <div>${rec}</div>
-                    </li>
-                `).join('');
+                    // Update recommendations
+                    const recommendationsList = document.getElementById('recommendationsList');
+                    recommendationsList.innerHTML = result.recommendations.map(rec => `
+                        <li class="recommendation-item">
+                            <div class="recommendation-icon">💡</div>
+                            <div>${rec}</div>
+                        </li>
+                    `).join('');
 
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while processing your diagnosis');
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing your diagnosis');
+                }
+            });
+
+            function getSeverityText(severity) {
+                if (severity < 30) return 'Mild';
+                if (severity < 60) return 'Moderate';
+                return 'Severe';
             }
-        });
 
-        function getSeverityText(severity) {
-            if (severity < 30) return 'Mild';
-            if (severity < 60) return 'Moderate';
-            return 'Severe';
-        }
+            // Sidebar toggle functionality
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
 
-        // Sidebar toggle functionality
-        const sidebarToggle = document.querySelector('.sidebar-toggle');
-        const sidebar = document.querySelector('.sidebar');
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
 
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 600) {
+                    if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                        sidebar.classList.remove('active');
+                    }
+                }
+            });
 
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 600) {
-                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 600) {
                     sidebar.classList.remove('active');
                 }
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 600) {
-                sidebar.classList.remove('active');
-            }
-        });
-
-        // mobile navigation
-        const mobileNavToggle = document.querySelector('.hamburger-menu');
-        const mobileNav = document.querySelector('.mobile-nav');
-        const mobileNavClose = document.querySelector('.mobile-nav-close');
-
-        mobileNavToggle.addEventListener('click', () => {
-            mobileNavToggle.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
-        });
-
-        // Close mobile nav with close button
-        if (mobileNavClose) {
-            mobileNavClose.addEventListener('click', () => {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
             });
-        }
 
-        // Close mobile nav when clicking a link
-        document.querySelectorAll('.mobile-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
+            // mobile navigation
+            const mobileNavToggle = document.querySelector('.hamburger-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const mobileNavClose = document.querySelector('.mobile-nav-close');
+
+            mobileNavToggle.addEventListener('click', () => {
+                mobileNavToggle.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
             });
-        });
 
-        // Close mobile nav when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileNav.contains(e.target) && !mobileNavToggle.contains(e.target)) {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
+            // Close mobile nav with close button
+            if (mobileNavClose) {
+                mobileNavClose.addEventListener('click', () => {
+                    mobileNavToggle.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
             }
-        });
-    </script>
+
+            // Close mobile nav when clicking a link
+            document.querySelectorAll('.mobile-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNavToggle.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Close mobile nav when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileNav.contains(e.target) && !mobileNavToggle.contains(e.target)) {
+                    mobileNavToggle.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        </script>
+    </div>
 </body>
 </html>

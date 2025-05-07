@@ -828,7 +828,7 @@ include("server/getresetpassword.php");
 
     <div class="login-container">
         <div class="login-card">
-            <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem;">Reset Password</h2>
             <div class="error-message" id="error-message"></div>
             <form id="login-form" action="resetpassword.php" method="POST">
                 <div class="form-group">

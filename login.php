@@ -32,7 +32,7 @@ if(isset($_GET['bool']) && $_GET['bool'] == true || isset($_SESSION['last_login_
 	unset($_SESSION['fldverifyotpcode']);
 }
 
-include("server/getresetpassword.php");
+include("server/getlogin.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -830,12 +830,20 @@ include("server/getresetpassword.php");
         <div class="login-card">
             <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
             <div class="error-message" id="error-message"></div>
-            <form id="login-form" action="resetpassword.php" method="POST">
+            <form id="login-form" action="login.php" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="flduseremail" class="form-input" required>
                 </div>
-                <button type="submit" name="resetpasswordBtn" class="form-button">Send OTP Code</button>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="flduserpassword" class="form-input" required>
+                </div>
+                <button type="submit" name="loginBtn" class="form-button">Login</button>
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="registration.php">Sign up</a></p><br>
+                    <a href="resetpassword.php">Forgot Password?</a>
+                </div>
             </form>
         </div>
     </div>

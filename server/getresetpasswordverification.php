@@ -1,6 +1,12 @@
 <?php
 include('connection.php');
 if(isset($_POST['resetPasswordVerificationBtn'])){
+    $useremail = filter_var($_POST['flduseremail'], FILTER_SANITIZE_EMAIL);
+    if (!filter_var($useremail, FILTER_VALIDATE_EMAIL)) {
+        header('location: ../resetpasswordverification.php?error=Invalid Email Format&flduseremail='.$useremail);
+        exit;
+    }
+
     // When creating/updating password
     $userpassword = $_POST['flduserpassword'];
     $userconfirmpassword = $_POST['flduserconfirmpassword'];
@@ -35,7 +41,7 @@ if(isset($_POST['resetPasswordVerificationBtn'])){
             }
             else{
                 $stmt->close();
-                header('../resetpasswordverification.php?error=Something Went Wrong!! Contact Support Team.&flduseremail='.$useremail);
+                header('../resetpasswordverification.php?error=Something Went Wrong. Contact Support Team.&flduseremail='.$useremail);
                 exit;
             }
 
@@ -50,6 +56,31 @@ if(isset($_POST['resetPasswordVerificationBtn'])){
                     // Initialize Rate Limit
                     $_SESSION['login_attempts'] = 0;
                     $_SESSION['last_login_attempt'] = time();
+
+                    // Send Email To User
+                    $to = $useremail;
+                    $subject = "Reset Password Successful";
+                    $message = "Hello $userfirstname,\n\nYou have successfully reset your password..\n\nBest regards,\nHealthcare Friends Team";
+                    // Additional headers for better email security
+                    $headers = array(
+                        'From: info@fcsholdix.co.za',
+                        'X-Mailer: PHP/' . phpversion(),
+                        'MIME-Version: 1.0',
+                        'Content-Type: text/plain; charset=UTF-8'
+                    );
+                    $headers = implode("\r\n", $headers);
+                    
+                    if(mail($to, $subject, $message, $headers)){
+                        // Email sent successfully. Go To Account Page.
+                        unset($_SESSION['fldverifyotpcode']);
+                        header('location: ../login.php?success=Password Reset Successful');
+                        exit;
+                    } else {
+                        // Email sending failed
+                        unset($_SESSION['fldverifyotpcode']);
+                        header('location: ../login.php?error=Failed To Send Login Email To '.$useremail);
+                        exit;
+                    }
 
                 } else{
                     header('location: ../resetpasswordverification.php?error=Something Went Wrong!! Contact Support Team.&flduseremail='.$useremail);

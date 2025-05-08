@@ -866,21 +866,21 @@ include("server/getregistration.php");
                 </div>
                 <div class="form-group  full-width">
                     <label for="registrationcountry">Country
-                        <select class="form-input" id="registrationcountry" name="fldusercountry" size="1" value="" required>
+                        <select class="form-input" id="country" name="fldusercountry" size="1" value="" required>
                             <option value="">Select Country...</option>
                         </select>
                     </label>
                 </div><br>
                 <div class="form-group  full-width">
                     <label for="registrationzone">Province
-                        <select class="form-input" id="registrationzone" name="flduserzone" size="1" value="" required>
+                        <select class="form-input" id="zone" name="flduserzone" size="1" value="" required>
                             <option value="">Select Province...</option>
                         </select>
                     </label>
                 </div><br>
                 <div class="form-group  full-width">
                     <label for="registrationcity">City
-                        <select class="form-input" id="registrationcity" name="fldusercity" size="1" value="" required>
+                        <select class="form-input" id="city" name="fldusercity" size="1" value="" required>
                             <option value="">Select City...</option>
                         </select>
                     </label>
@@ -1006,120 +1006,6 @@ include("server/getregistration.php");
         }
     </script>
 
-    <script>
-        const countries = [
-            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
-            "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
-            "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic",
-            "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
-            "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
-            "Fiji", "Finland", "France",
-            "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
-            "Haiti", "Honduras", "Hungary",
-            "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast",
-            "Jamaica", "Japan", "Jordan",
-            "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan",
-            "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-            "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
-            "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway",
-            "Oman",
-            "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
-            "Qatar",
-            "Romania", "Russia", "Rwanda",
-            "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
-            "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
-            "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan",
-            "Vanuatu", "Vatican City", "Venezuela", "Vietnam",
-            "Yemen",
-            "Zambia", "Zimbabwe"
-        ];
-
-        const provinces = {
-            "United States": ["California", "New York", "Texas", "Florida"],
-            "Canada": ["Ontario", "Quebec", "British Columbia", "Alberta"],
-            "United Kingdom": ["England", "Scotland", "Wales", "Northern Ireland"],
-            "Germany": ["Bavaria", "North Rhine-Westphalia", "Baden-Württemberg", "Hesse"],
-            "France": ["Île-de-France", "Auvergne-Rhône-Alpes", "Nouvelle-Aquitaine", "Occitanie"],
-            "Japan": ["Tokyo", "Osaka", "Kanagawa", "Aichi"],
-            "Australia": ["New South Wales", "Victoria", "Queensland", "Western Australia"],
-            "Brazil": ["São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia"],
-            "South Africa": [
-                "Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo",
-                "Mpumalanga", "North West", "Northern Cape", "Western Cape"
-            ],
-            "India": ["Maharashtra", "Uttar Pradesh", "Tamil Nadu", "Karnataka"]
-        };
-
-        const cities = {
-            "California": ["Los Angeles", "San Francisco", "San Diego"],
-            "New York": ["New York City", "Buffalo", "Albany"],
-            "Ontario": ["Toronto", "Ottawa", "Hamilton"],
-            "Quebec": ["Montreal", "Quebec City", "Laval"],
-            "England": ["London", "Manchester", "Birmingham"],
-            "Scotland": ["Edinburgh", "Glasgow", "Aberdeen"],
-            "Bavaria": ["Munich", "Nuremberg", "Augsburg"],
-            "North Rhine-Westphalia": ["Cologne", "Düsseldorf", "Dortmund"],
-            "Île-de-France": ["Paris", "Versailles", "Saint-Denis"],
-            "Auvergne-Rhône-Alpes": ["Lyon", "Grenoble", "Saint-Étienne"],
-            "Tokyo": ["Shinjuku", "Shibuya", "Chiyoda"],
-            "Osaka": ["Osaka City", "Sakai", "Higashiosaka"],
-            "New South Wales": ["Sydney", "Newcastle", "Wollongong"],
-            "Victoria": ["Melbourne", "Geelong", "Ballarat"],
-            "São Paulo": ["São Paulo City", "Campinas", "Guarulhos"],
-            "Rio de Janeiro": ["Rio de Janeiro City", "Niterói", "São Gonçalo"],
-            "Eastern Cape": ["Port Elizabeth", "East London", "Mthatha", "Uitenhage", "Queenstown", "King William's Town", "Grahamstown", "Graaff-Reinet", "Cradock", "Butterworth"],
-            "Free State": ["Bloemfontein", "Welkom", "Bethlehem", "Kroonstad", "Parys", "Sasolburg", "Odendaalsrus", "Phuthaditjhaba", "Virginia", "Botshabelo"],
-            "Gauteng": ["Johannesburg", "Pretoria", "Soweto", "Benoni", "Tembisa", "Boksburg", "Centurion", "Germiston", "Krugersdorp", "Vereeniging", "Springs", "Roodepoort", "Randburg"],
-            "KwaZulu-Natal": ["Durban", "Pietermaritzburg", "Newcastle", "Richards Bay", "Ladysmith", "Port Shepstone", "Empangeni", "Vryheid", "Estcourt", "Ulundi"],
-            "Limpopo": ["Polokwane", "Tzaneen", "Phalaborwa", "Mokopane", "Thohoyandou", "Louis Trichardt", "Musina", "Lebowakgomo", "Giyani", "Thabazimbi"],
-            "Mpumalanga": ["Nelspruit", "Witbank", "Secunda", "Middelburg", "Ermelo", "Standerton", "Barberton", "Piet Retief", "Bethal", "Lydenburg"],
-            "North West": ["Rustenburg", "Klerksdorp", "Potchefstroom", "Mahikeng", "Brits", "Lichtenburg", "Zeerust", "Wolmaransstad", "Vryburg", "Schweizer-Reneke"],
-            "Northern Cape": ["Kimberley", "Upington", "Kuruman", "Springbok", "De Aar", "Calvinia", "Colesberg", "Port Nolloth", "Prieska", "Douglas"],
-            "Western Cape": ["Cape Town", "Stellenbosch", "George", "Paarl", "Worcester", "Oudtshoorn", "Mossel Bay", "Hermanus", "Knysna", "Swellendam"],
-            "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
-            "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra"]
-        };
-
-        const countrySelect = document.getElementById('registrationcountry');
-        const provinceSelect = document.getElementById('registrationzone');
-        const citySelect = document.getElementById('registrationcity');
-
-        // Populate countries
-        countries.forEach(country => {
-            const option = document.createElement('option');
-            option.value = country;
-            option.textContent = country;
-            countrySelect.appendChild(option);
-        });
-
-        // Event listener for country selection
-        countrySelect.addEventListener('change', function() {
-            provinceSelect.innerHTML = '<option value="">Select Province...</option>';
-            citySelect.innerHTML = '<option value="">Select City...</option>';
-
-            if (this.value && provinces[this.value]) {
-            provinces[this.value].forEach(province => {
-                const option = document.createElement('option');
-                option.value = province;
-                option.textContent = province;
-                provinceSelect.appendChild(option);
-            });
-            }
-        });
-
-        // Event listener for province selection
-        provinceSelect.addEventListener('change', function() {
-            citySelect.innerHTML = '<option value="">Select City...</option>';
-        
-            if (this.value && cities[this.value]) {
-            cities[this.value].forEach(city => {
-                const option = document.createElement('option');
-                option.value = city;
-                option.textContent = city;
-                citySelect.appendChild(option);
-            });
-            }
-        });
-    </script>
+    <script src="js/addressbook.js"></script>
 </body>
 </html>

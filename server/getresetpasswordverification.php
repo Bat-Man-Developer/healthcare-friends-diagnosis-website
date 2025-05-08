@@ -60,7 +60,7 @@ if(isset($_POST['resetPasswordVerificationBtn'])){
                     // Send Email To User
                     $to = $useremail;
                     $subject = "Reset Password Successful";
-                    $message = "Hello $userfirstname,\n\nYou have successfully reset your password..\n\nBest regards,\nHealthcare Friends Team";
+                    $message = "Hello $userfirstname,\n\nYou have successfully reset your password.\n\nBest regards,\nHealthcare Friends Team";
                     // Additional headers for better email security
                     $headers = array(
                         'From: info@fcsholdix.co.za',

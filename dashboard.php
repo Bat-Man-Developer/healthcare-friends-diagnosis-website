@@ -280,6 +280,17 @@ include('server/getlogout.php');
             }
         }
 
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
         .features {
             padding: 5rem 1rem;
             background: white;

@@ -865,7 +865,7 @@ include("server/getregistrationverification.php");
 	
     <div class="register-container">
         <div class="register-card">
-            <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem;">Registration Verification</h2>
             <div class="countdown" id="countdown"></div>
             
             <form id="register-form" action="registrationverification.php" method="POST">

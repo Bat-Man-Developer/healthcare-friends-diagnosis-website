@@ -231,6 +231,48 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
             color: white;
         }
 
+        /*-------- website message error / success --------*/
+        #webmessage_red {
+            background-color: red;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2000;
+            animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
+        }
+
+        #webmessage_green{
+            background-color: green;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2000;
+            animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         .features {
             padding: 5rem 1rem;
             background: white;

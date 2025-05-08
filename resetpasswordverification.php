@@ -847,7 +847,7 @@ include("server/getresetpasswordverification.php");
 	
     <div class="login-container">
         <div class="login-card">
-            <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem;">Reset Password Verification</h2>
                 <div class="countdown" id="countdown"></div>
 
                 <form id="login-form" action="resetpasswordverification.php" method="POST">

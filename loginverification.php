@@ -257,7 +257,7 @@ include("server/getloginverification.php");
             border-radius: 0.5rem;
             color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            z-index: 2000;
             animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
         }
 
@@ -272,8 +272,30 @@ include("server/getloginverification.php");
             border-radius: 0.5rem;
             color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            z-index: 2000;
             animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
 
         .features {
@@ -847,7 +869,7 @@ include("server/getloginverification.php");
 	
     <div class="login-container">
         <div class="login-card">
-            <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem;">Login Verification</h2>
                 <div class="countdown" id="countdown"></div>
 
                 <form id="login-form" action="loginverification.php" method="POST">

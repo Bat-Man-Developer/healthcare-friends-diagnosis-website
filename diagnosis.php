@@ -249,7 +249,7 @@ if(!isset($_SESSION['logged_in'])){
             border-radius: 0.5rem;
             color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            z-index: 2000;
             animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
         }
 
@@ -264,8 +264,19 @@ if(!isset($_SESSION['logged_in'])){
             border-radius: 0.5rem;
             color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            z-index: 2000;
             animation: slideIn 0.3s ease-out forwards, slideOut 0.3s ease-out forwards 5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .features {

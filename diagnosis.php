@@ -990,37 +990,51 @@ if(!isset($_SESSION['logged_in'])){
             animation-delay: 0.6s;
         }
         .diagnosis-form {
-            background: white;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .form-section {
             margin-bottom: 2rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--dark);
             font-weight: 500;
+            color: #2d3748;
         }
 
         .form-control {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            transition: border-color 0.3s ease;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            background-color: #fff;
+            transition: border-color 0.15s ease-in-out;
         }
 
         .form-control:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(76, 201, 176, 0.1);
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
         }
 
         .symptoms-grid {
@@ -1030,38 +1044,90 @@ if(!isset($_SESSION['logged_in'])){
             margin-bottom: 1rem;
         }
 
-        .symptom-checkbox {
-            display: flex;
-            align-items: center;
+        .symptom-checkbox, .condition-checkbox {
             padding: 0.5rem;
-            border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 0.375rem;
+            transition: background-color 0.15s ease-in-out;
         }
 
-        .symptom-checkbox:hover {
-            background: #F7FAFC;
+        .symptom-checkbox:hover, .condition-checkbox:hover {
+            background-color: #f7fafc;
         }
+
 
         .symptom-checkbox input[type="checkbox"] {
             margin-right: 0.5rem;
         }
 
-        .submit-btn {
-            background: var(--primary);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
+        .severity-slider-container {
+            padding: 1rem 0;
+        }
+
+        .severity-slider {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .severity-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4299e1;
+            border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .severity-slider::-webkit-slider-thumb:hover {
+            background: #2b6cb0;
+        }
+
+        .submit-btn {
+            background-color: #4299e1;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: background-color 0.15s ease-in-out;
         }
 
         .submit-btn:hover {
-            background: #3BA697;
-            transform: translateY(-2px);
+            background-color: #2b6cb0;
+        }
+
+        .emergency-warning {
+            border-color: #f56565;
+        }
+
+        @media (max-width: 768px) {
+            .diagnosis-form {
+                padding: 1rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .submit-btn {
+                width: 100%;
+            }
+        }
+
+        .diagnosis-results {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .diagnosis-results.active {
+            display: block;
         }
 
         .result-section {
@@ -1076,6 +1142,10 @@ if(!isset($_SESSION['logged_in'])){
         .result-section.active {
             display: block;
             animation: fadeIn 0.5s ease-out;
+        }
+
+        .severity-container {
+            margin: 1.5rem 0;
         }
 
         .severity-indicator {
@@ -1097,6 +1167,12 @@ if(!isset($_SESSION['logged_in'])){
             height: 100%;
             background: var(--primary);
             transition: width 0.3s ease;
+        }
+
+        .severity-text {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            text-align: center;
         }
 
         .recommendation-list {
@@ -1125,6 +1201,10 @@ if(!isset($_SESSION['logged_in'])){
             justify-content: center;
             margin-right: 1rem;
             flex-shrink: 0;
+        }
+
+        .hidden {
+            display: none;
         }
 
         @keyframes fadeIn {
@@ -1193,10 +1273,10 @@ if(!isset($_SESSION['logged_in'])){
         <aside class="sidebar"><br><br><br>
             <div class="user-info">
                 <div class="user-avatar">
-                    JD
+                    
                 </div>
-                <h3>John Doe</h3>
-                <p>Patient ID: #12345</p>
+                <h3><?php echo $_SESSION['flduserfirstname'] . ' ' . $_SESSION['flduserlastname']; ?></h3>
+                <p>Patient ID: <?php echo $_SESSION['flduserid']; ?></p>
             </div>
             <nav>
                 <ul class="nav-menu">
@@ -1229,205 +1309,501 @@ if(!isset($_SESSION['logged_in'])){
             </nav>
         </aside>
 
-        <main>
-            <h2>New Medical Diagnosis Form</h2>
+        <main class="main-content">
+            <h2 class="section-title"><br>New Diagnosis</h2>
             
-            <form id="diagnosisForm">
-                <!-- Patient Information Section -->
-                <section>
-                    <h3>Patient Information</h3>
-                    <div>
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" required>
-                        
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" required>
-                        
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" id="dob" required>
-                        
-                        <label for="gender">Gender</label>
-                        <select id="gender" required>
-                            <option value="">Select gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>
+            <form class="diagnosis-form" id="diagnosisForm">
+                <!-- Emergency Warning -->
+                <div class="emergency-warning bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-red-700">
+                                If you are experiencing chest pain, severe breathing difficulties, or other life-threatening symptoms, 
+                                please call emergency services (911) immediately or visit your nearest emergency room.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient Information -->
+                <section class="form-section">
+                    <h3 class="section-title">Patient Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label for="fullName">Full Legal Name</label>
+                            <input type="text" id="fullName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="preferredName">Preferred Name (if different)</label>
+                            <input type="text" id="preferredName" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="form-group">
+                            <label for="dateOfBirth">Date of Birth</label>
+                            <input type="date" id="dateOfBirth" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender Identity</label>
+                            <select id="gender" class="form-control" required>
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="transgender_male">Transgender Male</option>
+                                <option value="transgender_female">Transgender Female</option>
+                                <option value="non_binary">Non-binary</option>
+                                <option value="other">Other</option>
+                                <option value="prefer_not_to_say">Prefer not to say</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pronouns">Preferred Pronouns</label>
+                            <select id="pronouns" class="form-control">
+                                <option value="">Select pronouns</option>
+                                <option value="he_him">He/Him</option>
+                                <option value="she_her">She/Her</option>
+                                <option value="they_them">They/Them</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Home Address</label>
+                        <input type="text" id="address" class="form-control" required>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State/Province</label>
+                            <input type="text" id="state" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">ZIP/Postal Code</label>
+                            <input type="text" id="zipCode" class="form-control" required>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Vital Signs Section -->
-                <section>
-                    <h3>Vital Signs</h3>
-                    <div>
-                        <label for="temperature">Temperature (°F)</label>
-                        <input type="number" id="temperature" step="0.1">
-                        
-                        <label for="bloodPressure">Blood Pressure (mmHg)</label>
-                        <input type="text" id="bloodPressure" placeholder="120/80">
-                        
-                        <label for="heartRate">Heart Rate (bpm)</label>
-                        <input type="number" id="heartRate">
-                        
-                        <label for="respiratoryRate">Respiratory Rate (breaths/min)</label>
-                        <input type="number" id="respiratoryRate">
-                        
-                        <label for="oxygenSaturation">Oxygen Saturation (%)</label>
-                        <input type="number" id="oxygenSaturation">
+                <!-- Insurance Information -->
+                <section class="form-section mt-8">
+                    <h3 class="section-title">Insurance Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label for="insuranceProvider">Insurance Provider</label>
+                            <input type="text" id="insuranceProvider" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="policyNumber">Policy Number</label>
+                            <input type="text" id="policyNumber" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupNumber">Group Number (if applicable)</label>
+                        <input type="text" id="groupNumber" class="form-control">
                     </div>
                 </section>
 
-                <!-- Primary Complaint Section -->
-                <section>
-                    <h3>Primary Complaint</h3>
-                    <div>
-                        <label for="mainSymptom">Main Symptom</label>
-                        <input type="text" id="mainSymptom" required>
-                        
-                        <label for="painLevel">Pain Level (0-10)</label>
-                        <input type="range" id="painLevel" min="0" max="10">
-                        
-                        <label for="duration">Duration of Symptoms</label>
-                        <select id="duration" required>
-                            <option value="">Select duration</option>
-                            <option value="hours">Less than 24 hours</option>
-                            <option value="days1-3">1-3 days</option>
-                            <option value="days4-7">4-7 days</option>
-                            <option value="weeks1-2">1-2 weeks</option>
-                            <option value="weeks2+">More than 2 weeks</option>
-                            <option value="chronic">Chronic (months/years)</option>
-                        </select>
+                <!-- Medical History -->
+                <section class="form-section mt-8">
+                    <h3 class="section-title">Comprehensive Medical History</h3>
+                    
+                    <div class="form-group">
+                        <label class="font-semibold">Existing Medical Conditions</label>
+                        <div class="conditions-grid grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="diabetes">
+                                <span>Diabetes</span>
+                            </label>
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="hypertension">
+                                <span>Hypertension</span>
+                            </label>
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="heart_disease">
+                                <span>Heart Disease</span>
+                            </label>
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="asthma">
+                                <span>Asthma</span>
+                            </label>
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="cancer">
+                                <span>Cancer</span>
+                            </label>
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="thyroid">
+                                <span>Thyroid Disease</span>
+                            </label>
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="arthritis">
+                                <span>Arthritis</span>
+                            </label>
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="mental_health">
+                                <span>Mental Health Condition</span>
+                            </label>
+                            <label class="condition-checkbox flex items-center space-x-2">
+                                <input type="checkbox" name="conditions" value="autoimmune">
+                                <span>Autoimmune Disease</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="form-group">
+                            <label for="otherConditions">Other Medical Conditions</label>
+                            <textarea id="otherConditions" class="form-control" rows="3" 
+                                placeholder="Please list any other medical conditions not mentioned above"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="surgeries">Previous Surgeries</label>
+                            <textarea id="surgeries" class="form-control" rows="3"
+                                placeholder="List any previous surgeries with dates"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label for="allergies">Allergies</label>
+                            <textarea id="allergies" class="form-control" rows="3"
+                                placeholder="List all known allergies (medications, food, environmental)"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="medications">Current Medications</label>
+                            <textarea id="medications" class="form-control" rows="3"
+                                placeholder="List all current medications with dosages"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <label class="font-semibold">Family Medical History</label>
+                        <div class="family-history-grid grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="familyHeartDisease">Heart Disease</label>
+                                <select id="familyHeartDisease" class="form-control">
+                                    <option value="none">None</option>
+                                    <option value="parents">Parents</option>
+                                    <option value="siblings">Siblings</option>
+                                    <option value="grandparents">Grandparents</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="familyDiabetes">Diabetes</label>
+                                <select id="familyDiabetes" class="form-control">
+                                    <option value="none">None</option>
+                                    <option value="parents">Parents</option>
+                                    <option value="siblings">Siblings</option>
+                                    <option value="grandparents">Grandparents</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="familyCancer">Cancer</label>
+                                <select id="familyCancer" class="form-control">
+                                    <option value="none">None</option>
+                                    <option value="parents">Parents</option>
+                                    <option value="siblings">Siblings</option>
+                                    <option value="grandparents">Grandparents</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="familyMentalHealth">Mental Health Conditions</label>
+                                <select id="familyMentalHealth" class="form-control">
+                                    <option value="none">None</option>
+                                    <option value="parents">Parents</option>
+                                    <option value="siblings">Siblings</option>
+                                    <option value="grandparents">Grandparents</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Associated Symptoms Section -->
-                <section>
-                    <h3>Associated Symptoms</h3>
-                    <div>
-                        <h4>General</h4>
-                        <label><input type="checkbox" name="symptoms" value="fever"> Fever</label>
-                        <label><input type="checkbox" name="symptoms" value="chills"> Chills</label>
-                        <label><input type="checkbox" name="symptoms" value="fatigue"> Fatigue</label>
-                        <label><input type="checkbox" name="symptoms" value="weakness"> Weakness</label>
-                        <label><input type="checkbox" name="symptoms" value="weightLoss"> Weight Loss</label>
+                <!-- Current Symptoms -->
+                <section class="form-section mt-8">
+                    <h3 class="section-title">Current Symptoms Assessment</h3>
+                    
+                    <div class="form-group">
+                        <label for="mainSymptom">Primary Complaint</label>
+                        <input type="text" id="mainSymptom" class="form-control" required
+                            placeholder="What is your main symptom or concern?">
+                    </div>
 
-                        <h4>Neurological</h4>
-                        <label><input type="checkbox" name="symptoms" value="headache"> Headache</label>
-                        <label><input type="checkbox" name="symptoms" value="dizziness"> Dizziness</label>
-                        <label><input type="checkbox" name="symptoms" value="confusion"> Confusion</label>
-                        <label><input type="checkbox" name="symptoms" value="syncope"> Fainting</label>
+                    <div class="form-group mt-4">
+                        <label class="font-semibold">Associated Symptoms</label>
+                        <div class="symptoms-grid grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <!-- General Symptoms -->
+                            <div class="symptom-category">
+                                <h4 class="text-sm font-semibold mb-2">General</h4>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="fever">
+                                    <span>Fever</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="fatigue">
+                                    <span>Fatigue</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="weakness">
+                                    <span>Weakness</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="weight_loss">
+                                    <span>Weight Loss</span>
+                                </label>
+                            </div>
 
-                        <h4>Respiratory</h4>
-                        <label><input type="checkbox" name="symptoms" value="cough"> Cough</label>
-                        <label><input type="checkbox" name="symptoms" value="sob"> Shortness of Breath</label>
-                        <label><input type="checkbox" name="symptoms" value="wheezing"> Wheezing</label>
+                            <!-- Pain Symptoms -->
+                            <div class="symptom-category">
+                                <h4 class="text-sm font-semibold mb-2">Pain</h4>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="headache">
+                                    <span>Headache</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="chest_pain">
+                                    <span>Chest Pain</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="abdominal_pain">
+                                    <span>Abdominal Pain</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="joint_pain">
+                                    <span>Joint Pain</span>
+                                </label>
+                            </div>
 
-                        <h4>Gastrointestinal</h4>
-                        <label><input type="checkbox" name="symptoms" value="nausea"> Nausea</label>
-                        <label><input type="checkbox" name="symptoms" value="vomiting"> Vomiting</label>
-                        <label><input type="checkbox" name="symptoms" value="diarrhea"> Diarrhea</label>
-                        <label><input type="checkbox" name="symptoms" value="constipation"> Constipation</label>
+                            <!-- Respiratory Symptoms -->
+                            <div class="symptom-category">
+                                <h4 class="text-sm font-semibold mb-2">Respiratory</h4>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="cough">
+                                    <span>Cough</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="shortness_breath">
+                                    <span>Shortness of Breath</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="wheezing">
+                                    <span>Wheezing</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="sputum">
+                                    <span>Sputum Production</span>
+                                </label>
+                            </div>
+
+                            <!-- Gastrointestinal Symptoms -->
+                            <div class="symptom-category">
+                                <h4 class="text-sm font-semibold mb-2">Gastrointestinal</h4>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="nausea">
+                                    <span>Nausea</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="vomiting">
+                                    <span>Vomiting</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="diarrhea">
+                                    <span>Diarrhea</span>
+                                </label>
+                                <label class="symptom-checkbox flex items-center space-x-2">
+                                    <input type="checkbox" name="symptoms" value="constipation">
+                                    <span>Constipation</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="form-group">
+                            <label for="symptomOnset">When did symptoms begin?</label>
+                            <input type="date" id="symptomOnset" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="duration">Duration of Symptoms</label>
+                            <select id="duration" class="form-control" required>
+                                <option value="">Select duration</option>
+                                <option value="1">Less than 24 hours</option>
+                                <option value="2">1-3 days</option>
+                                <option value="3">4-7 days</option>
+                                <option value="4">More than a week</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <label for="severity">Severity Level</label>
+                        <div class="severity-slider-container">
+                            <input type="range" id="severity" min="1" max="10" class="severity-slider" required>
+                            <div class="severity-labels flex justify-between text-sm">
+                                <span>Mild</span>
+                                <span>Moderate</span>
+                                <span>Severe</span>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Medical History Section -->
-                <section>
-                    <h3>Medical History</h3>
-                    <div>
-                        <label for="pastConditions">Past Medical Conditions</label>
-                        <textarea id="pastConditions" rows="3"></textarea>
+                <!-- Lifestyle Factors -->
+                <section class="form-section mt-8">
+                    <h3 class="section-title">Lifestyle Factors</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="form-group">
+                            <label for="smoking">Smoking Status</label>
+                            <select id="smoking" class="form-control">
+                                <option value="never">Never Smoked</option>
+                                <option value="former">Former Smoker</option>
+                                <option value="current">Current Smoker</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="alcohol">Alcohol Consumption</label>
+                            <select id="alcohol" class="form-control">
+                                <option value="none">None</option>
+                                <option value="occasional">Occasional</option>
+                                <option value="moderate">Moderate</option>
+                                <option value="heavy">Heavy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exercise">Exercise Frequency</label>
+                            <select id="exercise" class="form-control">
+                                <option value="none">None</option>
+                                <option value="occasional">1-2 times/week</option>
+                                <option value="regular">3-4 times/week</option>
+                                <option value="frequent">5+ times/week</option>
+                            </select>
+                        </div>
+                    </div>
 
-                        <label for="currentMedications">Current Medications</label>
-                        <textarea id="currentMedications" rows="3"></textarea>
-
-                        <label for="allergies">Allergies</label>
-                        <textarea id="allergies" rows="2"></textarea>
-
-                        <label for="familyHistory">Family History</label>
-                        <textarea id="familyHistory" rows="3"></textarea>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label for="diet">Dietary Habits</label>
+                            <textarea id="diet" class="form-control" rows="3"
+                                placeholder="Describe your typical daily diet and any dietary restrictions"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="stress">Stress Levels and Management</label>
+                            <textarea id="stress" class="form-control" rows="3"
+                                placeholder="Describe your current stress levels and how you manage stress"></textarea>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Social History Section -->
-                <section>
-                    <h3>Social History</h3>
-                    <div>
-                        <label for="occupation">Occupation</label>
-                        <input type="text" id="occupation">
+                <!-- Additional Information -->
+                <section class="form-section mt-8">
+                    <h3 class="section-title">Additional Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="description">Detailed Symptom Description</label>
+                        <textarea id="description" class="form-control" rows="4" 
+                            placeholder="Please provide a detailed description of your symptoms, including any patterns, triggers, or relieving factors"></textarea>
+                    </div>
 
-                        <label for="smoking">Smoking Status</label>
-                        <select id="smoking">
-                            <option value="never">Never Smoker</option>
-                            <option value="former">Former Smoker</option>
-                            <option value="current">Current Smoker</option>
-                        </select>
+                    <div class="form-group">
+                        <label for="treatments">Previous Treatments</label>
+                        <textarea id="treatments" class="form-control" rows="3"
+                            placeholder="List any treatments or medications you've tried for these symptoms"></textarea>
+                    </div>
 
-                        <label for="alcohol">Alcohol Consumption</label>
-                        <select id="alcohol">
-                            <option value="none">None</option>
-                            <option value="occasional">Occasional</option>
-                            <option value="moderate">Moderate</option>
-                            <option value="heavy">Heavy</option>
-                        </select>
+                    <div class="form-group">
+                        <label for="questions">Questions for Healthcare Provider</label>
+                        <textarea id="questions" class="form-control" rows="3"
+                            placeholder="List any specific questions you have for your healthcare provider"></textarea>
                     </div>
                 </section>
 
-                <!-- Additional Information Section -->
-                <section>
-                    <h3>Additional Information</h3>
-                    <div>
-                        <label for="additionalNotes">Additional Notes or Concerns</label>
-                        <textarea id="additionalNotes" rows="4"></textarea>
+                <!-- Consent and Submission -->
+                <section class="form-section mt-8">
+                    <div class="consent-box bg-gray-50 p-4 rounded-lg">
+                        <label class="flex items-start space-x-2">
+                            <input type="checkbox" required class="mt-1">
+                            <span class="text-sm">
+                                I confirm that the information provided is accurate to the best of my knowledge. I understand that this 
+                                online assessment is not a substitute for professional medical advice, diagnosis, or treatment. In case 
+                                of emergency, I will call emergency services or visit the nearest emergency room.
+                            </span>
+                        </label>
                     </div>
-                </section>
 
-                <button type="submit">Generate Diagnosis</button>
+                    <button type="submit" class="submit-btn mt-6 w-full md:w-auto">
+                        Get Initial Assessment
+                    </button>
+                </section>
             </form>
 
-            <div id="resultSection">
-                <h3>Diagnosis Results</h3>
-                <div id="diagnosisResult"></div>
-                <div id="severityIndicator"></div>
-                <h4>Recommendations</h4>
-                <ul id="recommendationsList"></ul>
+            <div class="results-container">
+                <h2>Diagnosis Results</h2>
+                
+                <!-- Severity Indicator -->
+                <div class="severity-container">
+                    <h3>Severity Level</h3>
+                    <div class="severity-bar">
+                        <div id="severityFill" class="severity-fill"></div>
+                    </div>
+                    <div id="severityText" class="severity-text"></div>
+                </div>
+
+                <!-- Diagnosis Result -->
+                <div id="diagnosisResult" class="diagnosis-details">
+                    <!-- This will be populated by JavaScript -->
+                </div>
+
+                <!-- Recommendations -->
+                <div class="recommendations">
+                    <h3>Recommendations</h3>
+                    <ul id="recommendationsList" class="recommendations-list">
+                        <!-- This will be populated by JavaScript -->
+                    </ul>
+                </div>
             </div>
         </main>
 
         <script>
+            const durationMap = {
+                'hours': '1',
+                'days_1_3': '2',
+                'days_4_7': '3',
+                'weeks_1_2': '4',
+                'weeks_more': '4'
+            };
+
             document.getElementById('diagnosisForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
 
                 const formData = {
-                    patientInfo: {
-                        firstName: document.getElementById('firstName').value,
-                        lastName: document.getElementById('lastName').value,
-                        dob: document.getElementById('dob').value,
-                        gender: document.getElementById('gender').value
-                    },
-                    vitalSigns: {
-                        temperature: document.getElementById('temperature').value,
-                        bloodPressure: document.getElementById('bloodPressure').value,
-                        heartRate: document.getElementById('heartRate').value,
-                        respiratoryRate: document.getElementById('respiratoryRate').value,
-                        oxygenSaturation: document.getElementById('oxygenSaturation').value
-                    },
                     mainSymptom: document.getElementById('mainSymptom').value,
-                    painLevel: document.getElementById('painLevel').value,
-                    duration: document.getElementById('duration').value,
                     symptoms: Array.from(document.querySelectorAll('input[name="symptoms"]:checked'))
                         .map(cb => cb.value),
-                    medicalHistory: {
-                        pastConditions: document.getElementById('pastConditions').value,
-                        currentMedications: document.getElementById('currentMedications').value,
-                        allergies: document.getElementById('allergies').value,
-                        familyHistory: document.getElementById('familyHistory').value
-                    },
-                    socialHistory: {
-                        occupation: document.getElementById('occupation').value,
-                        smoking: document.getElementById('smoking').value,
-                        alcohol: document.getElementById('alcohol').value
-                    },
-                    additionalNotes: document.getElementById('additionalNotes').value
+                    duration: durationMap[document.getElementById('duration').value], // Map the duration
+                    description: document.getElementById('description').value,
+                    userId: '<?php echo isset($_SESSION["flduserid"]) ? $_SESSION["flduserid"] : ""; ?>'
                 };
 
                 try {
@@ -1444,25 +1820,86 @@ if(!isset($_SESSION['logged_in'])){
                     }
 
                     const result = await response.json();
-                    displayResults(result);
+                    
+                    if (result.error) {
+                        throw new Error(result.message || 'An error occurred');
+                    }
+
+                    showResults();
+
+                    // Show results
+                    const resultSection = document.getElementById('resultSection');
+                    resultSection.classList.add('active');
+
+                    // Update severity indicator
+                    const severityFill = document.getElementById('severityFill');
+                    const severityText = document.getElementById('severityText');
+                    severityFill.style.width = `${result.severity || 0}%`;
+                    severityText.textContent = getSeverityText(result.severity || 0);
+
+                    // Update diagnosis result
+                    document.getElementById('diagnosisResult').innerHTML = `
+                        <p><strong>Possible Condition:</strong> ${result.condition || 'Unknown'}</p>
+                        <p>${result.description || 'No description available'}</p>
+                    `;
+
+                    // Update recommendations
+                    const recommendationsList = document.getElementById('recommendationsList');
+                    if (result.recommendations && Array.isArray(result.recommendations)) {
+                        recommendationsList.innerHTML = result.recommendations.map(rec => `
+                            <li class="recommendation-item">
+                                <div class="recommendation-icon">💡</div>
+                                <div>${rec}</div>
+                            </li>
+                        `).join('');
+                    } else {
+                        recommendationsList.innerHTML = '<li>No recommendations available</li>';
+                    }
+
                 } catch (error) {
                     console.error('Error:', error);
                     alert('An error occurred while processing your diagnosis: ' + error.message);
                 }
             });
 
-            function displayResults(result) {
-                document.getElementById('resultSection').style.display = 'block';
-                document.getElementById('diagnosisResult').innerHTML = `
-                    <p><strong>Possible Condition:</strong> ${result.condition || 'Unknown'}</p>
-                    <p>${result.description || 'No description available'}</p>
-                `;
-
-                document.getElementById('recommendationsList').innerHTML = 
-                    (result.recommendations || ['No recommendations available'])
-                        .map(rec => `<li>${rec}</li>`)
-                        .join('');
+            function getSeverityText(severity) {
+                if (severity < 30) return 'Mild';
+                if (severity < 60) return 'Moderate';
+                return 'Severe';
             }
+
+            // Sidebar toggle functionality
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
+
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 600) {
+                    if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                        sidebar.classList.remove('active');
+                    }
+                }
+            });
+
+            function showResults() {
+                const resultSection = document.getElementById('resultSection');
+                resultSection.classList.remove('hidden');
+                resultSection.classList.add('active');
+                
+                // Scroll to results
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 600) {
+                    sidebar.classList.remove('active');
+                }
+            });
 
             // mobile navigation
             const mobileNavToggle = document.querySelector('.hamburger-menu');

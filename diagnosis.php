@@ -1229,73 +1229,167 @@ if(!isset($_SESSION['logged_in'])){
             </nav>
         </aside>
 
-        <main class="main-content">
-            <h2 class="section-title"><br>New Diagnosis</h2>
+        <main>
+            <h2>New Medical Diagnosis Form</h2>
             
-            <form class="diagnosis-form" id="diagnosisForm">
-                <div class="form-group">
-                    <label for="mainSymptom">Main Symptom</label>
-                    <input type="text" id="mainSymptom" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Additional Symptoms</label>
-                    <div class="symptoms-grid">
-                        <label class="symptom-checkbox">
-                            <input type="checkbox" name="symptoms" value="fever"> Fever
-                        </label>
-                        <label class="symptom-checkbox">
-                            <input type="checkbox" name="symptoms" value="cough"> Cough
-                        </label>
-                        <label class="symptom-checkbox">
-                            <input type="checkbox" name="symptoms" value="fatigue"> Fatigue
-                        </label>
-                        <label class="symptom-checkbox">
-                            <input type="checkbox" name="symptoms" value="headache"> Headache
-                        </label>
-                        <label class="symptom-checkbox">
-                            <input type="checkbox" name="symptoms" value="nausea"> Nausea
-                        </label>
-                        <label class="symptom-checkbox">
-                            <input type="checkbox" name="symptoms" value="dizziness"> Dizziness
-                        </label>
+            <form id="diagnosisForm">
+                <!-- Patient Information Section -->
+                <section>
+                    <h3>Patient Information</h3>
+                    <div>
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" required>
+                        
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" required>
+                        
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" required>
+                        
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
-                </div>
+                </section>
 
-                <div class="form-group">
-                    <label for="duration">Duration of Symptoms</label>
-                    <select id="duration" class="form-control" required>
-                        <option value="">Select duration</option>
-                        <option value="1">Less than 24 hours</option>
-                        <option value="2">1-3 days</option>
-                        <option value="3">4-7 days</option>
-                        <option value="4">More than a week</option>
-                    </select>
-                </div>
+                <!-- Vital Signs Section -->
+                <section>
+                    <h3>Vital Signs</h3>
+                    <div>
+                        <label for="temperature">Temperature (°F)</label>
+                        <input type="number" id="temperature" step="0.1">
+                        
+                        <label for="bloodPressure">Blood Pressure (mmHg)</label>
+                        <input type="text" id="bloodPressure" placeholder="120/80">
+                        
+                        <label for="heartRate">Heart Rate (bpm)</label>
+                        <input type="number" id="heartRate">
+                        
+                        <label for="respiratoryRate">Respiratory Rate (breaths/min)</label>
+                        <input type="number" id="respiratoryRate">
+                        
+                        <label for="oxygenSaturation">Oxygen Saturation (%)</label>
+                        <input type="number" id="oxygenSaturation">
+                    </div>
+                </section>
 
-                <div class="form-group">
-                    <label for="description">Additional Details</label>
-                    <textarea id="description" class="form-control" rows="4"></textarea>
-                </div>
+                <!-- Primary Complaint Section -->
+                <section>
+                    <h3>Primary Complaint</h3>
+                    <div>
+                        <label for="mainSymptom">Main Symptom</label>
+                        <input type="text" id="mainSymptom" required>
+                        
+                        <label for="painLevel">Pain Level (0-10)</label>
+                        <input type="range" id="painLevel" min="0" max="10">
+                        
+                        <label for="duration">Duration of Symptoms</label>
+                        <select id="duration" required>
+                            <option value="">Select duration</option>
+                            <option value="hours">Less than 24 hours</option>
+                            <option value="days1-3">1-3 days</option>
+                            <option value="days4-7">4-7 days</option>
+                            <option value="weeks1-2">1-2 weeks</option>
+                            <option value="weeks2+">More than 2 weeks</option>
+                            <option value="chronic">Chronic (months/years)</option>
+                        </select>
+                    </div>
+                </section>
 
-                <button type="submit" class="submit-btn">Get Diagnosis</button>
+                <!-- Associated Symptoms Section -->
+                <section>
+                    <h3>Associated Symptoms</h3>
+                    <div>
+                        <h4>General</h4>
+                        <label><input type="checkbox" name="symptoms" value="fever"> Fever</label>
+                        <label><input type="checkbox" name="symptoms" value="chills"> Chills</label>
+                        <label><input type="checkbox" name="symptoms" value="fatigue"> Fatigue</label>
+                        <label><input type="checkbox" name="symptoms" value="weakness"> Weakness</label>
+                        <label><input type="checkbox" name="symptoms" value="weightLoss"> Weight Loss</label>
+
+                        <h4>Neurological</h4>
+                        <label><input type="checkbox" name="symptoms" value="headache"> Headache</label>
+                        <label><input type="checkbox" name="symptoms" value="dizziness"> Dizziness</label>
+                        <label><input type="checkbox" name="symptoms" value="confusion"> Confusion</label>
+                        <label><input type="checkbox" name="symptoms" value="syncope"> Fainting</label>
+
+                        <h4>Respiratory</h4>
+                        <label><input type="checkbox" name="symptoms" value="cough"> Cough</label>
+                        <label><input type="checkbox" name="symptoms" value="sob"> Shortness of Breath</label>
+                        <label><input type="checkbox" name="symptoms" value="wheezing"> Wheezing</label>
+
+                        <h4>Gastrointestinal</h4>
+                        <label><input type="checkbox" name="symptoms" value="nausea"> Nausea</label>
+                        <label><input type="checkbox" name="symptoms" value="vomiting"> Vomiting</label>
+                        <label><input type="checkbox" name="symptoms" value="diarrhea"> Diarrhea</label>
+                        <label><input type="checkbox" name="symptoms" value="constipation"> Constipation</label>
+                    </div>
+                </section>
+
+                <!-- Medical History Section -->
+                <section>
+                    <h3>Medical History</h3>
+                    <div>
+                        <label for="pastConditions">Past Medical Conditions</label>
+                        <textarea id="pastConditions" rows="3"></textarea>
+
+                        <label for="currentMedications">Current Medications</label>
+                        <textarea id="currentMedications" rows="3"></textarea>
+
+                        <label for="allergies">Allergies</label>
+                        <textarea id="allergies" rows="2"></textarea>
+
+                        <label for="familyHistory">Family History</label>
+                        <textarea id="familyHistory" rows="3"></textarea>
+                    </div>
+                </section>
+
+                <!-- Social History Section -->
+                <section>
+                    <h3>Social History</h3>
+                    <div>
+                        <label for="occupation">Occupation</label>
+                        <input type="text" id="occupation">
+
+                        <label for="smoking">Smoking Status</label>
+                        <select id="smoking">
+                            <option value="never">Never Smoker</option>
+                            <option value="former">Former Smoker</option>
+                            <option value="current">Current Smoker</option>
+                        </select>
+
+                        <label for="alcohol">Alcohol Consumption</label>
+                        <select id="alcohol">
+                            <option value="none">None</option>
+                            <option value="occasional">Occasional</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="heavy">Heavy</option>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- Additional Information Section -->
+                <section>
+                    <h3>Additional Information</h3>
+                    <div>
+                        <label for="additionalNotes">Additional Notes or Concerns</label>
+                        <textarea id="additionalNotes" rows="4"></textarea>
+                    </div>
+                </section>
+
+                <button type="submit">Generate Diagnosis</button>
             </form>
 
-            <div class="result-section" id="resultSection">
+            <div id="resultSection">
                 <h3>Diagnosis Results</h3>
-                <div class="severity-indicator">
-                    <div class="severity-bar">
-                        <div class="severity-fill" id="severityFill"></div>
-                    </div>
-                    <span id="severityText">Moderate</span>
-                </div>
-
                 <div id="diagnosisResult"></div>
-
+                <div id="severityIndicator"></div>
                 <h4>Recommendations</h4>
-                <ul class="recommendation-list" id="recommendationsList">
-                    <!-- Recommendations will be populated here -->
-                </ul>
+                <ul id="recommendationsList"></ul>
             </div>
         </main>
 
@@ -1304,12 +1398,36 @@ if(!isset($_SESSION['logged_in'])){
                 e.preventDefault();
 
                 const formData = {
+                    patientInfo: {
+                        firstName: document.getElementById('firstName').value,
+                        lastName: document.getElementById('lastName').value,
+                        dob: document.getElementById('dob').value,
+                        gender: document.getElementById('gender').value
+                    },
+                    vitalSigns: {
+                        temperature: document.getElementById('temperature').value,
+                        bloodPressure: document.getElementById('bloodPressure').value,
+                        heartRate: document.getElementById('heartRate').value,
+                        respiratoryRate: document.getElementById('respiratoryRate').value,
+                        oxygenSaturation: document.getElementById('oxygenSaturation').value
+                    },
                     mainSymptom: document.getElementById('mainSymptom').value,
+                    painLevel: document.getElementById('painLevel').value,
+                    duration: document.getElementById('duration').value,
                     symptoms: Array.from(document.querySelectorAll('input[name="symptoms"]:checked'))
                         .map(cb => cb.value),
-                    duration: document.getElementById('duration').value,
-                    description: document.getElementById('description').value,
-                    userId: '<?php echo isset($_SESSION["flduserid"]) ? $_SESSION["flduserid"] : ""; ?>'
+                    medicalHistory: {
+                        pastConditions: document.getElementById('pastConditions').value,
+                        currentMedications: document.getElementById('currentMedications').value,
+                        allergies: document.getElementById('allergies').value,
+                        familyHistory: document.getElementById('familyHistory').value
+                    },
+                    socialHistory: {
+                        occupation: document.getElementById('occupation').value,
+                        smoking: document.getElementById('smoking').value,
+                        alcohol: document.getElementById('alcohol').value
+                    },
+                    additionalNotes: document.getElementById('additionalNotes').value
                 };
 
                 try {
@@ -1326,75 +1444,25 @@ if(!isset($_SESSION['logged_in'])){
                     }
 
                     const result = await response.json();
-                    
-                    if (result.error) {
-                        throw new Error(result.message || 'An error occurred');
-                    }
-
-                    // Show results
-                    const resultSection = document.getElementById('resultSection');
-                    resultSection.classList.add('active');
-
-                    // Update severity indicator
-                    const severityFill = document.getElementById('severityFill');
-                    const severityText = document.getElementById('severityText');
-                    severityFill.style.width = `${result.severity || 0}%`;
-                    severityText.textContent = getSeverityText(result.severity || 0);
-
-                    // Update diagnosis result
-                    document.getElementById('diagnosisResult').innerHTML = `
-                        <p><strong>Possible Condition:</strong> ${result.condition || 'Unknown'}</p>
-                        <p>${result.description || 'No description available'}</p>
-                    `;
-
-                    // Update recommendations
-                    const recommendationsList = document.getElementById('recommendationsList');
-                    if (result.recommendations && Array.isArray(result.recommendations)) {
-                        recommendationsList.innerHTML = result.recommendations.map(rec => `
-                            <li class="recommendation-item">
-                                <div class="recommendation-icon">💡</div>
-                                <div>${rec}</div>
-                            </li>
-                        `).join('');
-                    } else {
-                        recommendationsList.innerHTML = '<li>No recommendations available</li>';
-                    }
-
+                    displayResults(result);
                 } catch (error) {
                     console.error('Error:', error);
                     alert('An error occurred while processing your diagnosis: ' + error.message);
                 }
             });
 
-            function getSeverityText(severity) {
-                if (severity < 30) return 'Mild';
-                if (severity < 60) return 'Moderate';
-                return 'Severe';
+            function displayResults(result) {
+                document.getElementById('resultSection').style.display = 'block';
+                document.getElementById('diagnosisResult').innerHTML = `
+                    <p><strong>Possible Condition:</strong> ${result.condition || 'Unknown'}</p>
+                    <p>${result.description || 'No description available'}</p>
+                `;
+
+                document.getElementById('recommendationsList').innerHTML = 
+                    (result.recommendations || ['No recommendations available'])
+                        .map(rec => `<li>${rec}</li>`)
+                        .join('');
             }
-
-            // Sidebar toggle functionality
-            const sidebarToggle = document.querySelector('.sidebar-toggle');
-            const sidebar = document.querySelector('.sidebar');
-
-            sidebarToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('active');
-            });
-
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', (e) => {
-                if (window.innerWidth <= 600) {
-                    if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-                        sidebar.classList.remove('active');
-                    }
-                }
-            });
-
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 600) {
-                    sidebar.classList.remove('active');
-                }
-            });
 
             // mobile navigation
             const mobileNavToggle = document.querySelector('.hamburger-menu');

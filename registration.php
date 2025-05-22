@@ -818,50 +818,8 @@ include("server/getregistration.php");
     </style>
 </head>
 <body>
-<nav class="navbar">
-        <div class="nav-content">
-            <a href="index.php" class="logo">
-                <div class="logo-icon">H</div>
-                HealthCare
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About</a></li>
-                <li><a href="diagnosis.php">Diagnosis</a></li>
-                <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="logout.php">Logout</a></li>
-                <?php else: ?>
-                    <li><a href="login.php">Login</a></li>
-                    <li><a href="registration.php">Register</a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </nav>
-    
-    <button class="hamburger-menu" type="button">
-        <div class="hamburger-box">
-            <div class="hamburger-inner"></div>
-        </div>
-    </button>
-
-    <div class="mobile-nav">
-        <button class="mobile-nav-close">
-            <span>&times;</span>
-        </button>
-        <ul style="text-align: center">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="diagnosis.php">Diagnosis</a></li>
-            <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            <?php else: ?>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="registration.php">Register</a></li>
-            <?php endif; ?>
-        </ul>
-    </div>
+    <!-- Navigation Bar -->
+    <?php require_once 'layouts/navbar.php'; ?>
 
     <!--------- Website Message ------------>
     <?php if(isset($_GET['error'])){ ?>
@@ -979,44 +937,6 @@ include("server/getregistration.php");
             }
         }
 
-        // mobile navigation
-        const mobileNavToggle = document.querySelector('.hamburger-menu');
-        const mobileNav = document.querySelector('.mobile-nav');
-        const mobileNavClose = document.querySelector('.mobile-nav-close');
-
-        mobileNavToggle.addEventListener('click', () => {
-            mobileNavToggle.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
-        });
-
-        // Close mobile nav with close button
-        if (mobileNavClose) {
-            mobileNavClose.addEventListener('click', () => {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        }
-
-        // Close mobile nav when clicking a link
-        document.querySelectorAll('.mobile-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-
-        // Close mobile nav when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileNav.contains(e.target) && !mobileNavToggle.contains(e.target)) {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-
         function showError(message) {
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
@@ -1029,5 +949,8 @@ include("server/getregistration.php");
     </script>
 
     <script src="js/addressbook.js"></script>
+    
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
 </body>
 </html>

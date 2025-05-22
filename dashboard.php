@@ -994,51 +994,9 @@ include('server/getlogout.php');
     </style>
 </head>
 <body>
-<button class="sidebar-toggle">☰</button>
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="index.php" class="logo">
-                <div class="logo-icon">H</div>
-                HealthCare
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About</a></li>
-                <li><a href="diagnosis.php">Diagnosis</a></li>
-                <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="logout.php">Logout</a></li>
-                <?php else: ?>
-                    <li><a href="login.php">Login</a></li>
-                    <li><a href="registration.php">Register</a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </nav>
-    
-    <button class="hamburger-menu" type="button">
-        <div class="hamburger-box">
-            <div class="hamburger-inner"></div>
-        </div>
-    </button>
-
-    <div class="mobile-nav">
-        <button class="mobile-nav-close">
-            <span>&times;</span>
-        </button>
-        <ul style="text-align: center">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="diagnosis.php">Diagnosis</a></li>
-            <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            <?php else: ?>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="registration.php">Register</a></li>
-            <?php endif; ?>
-        </ul>
-    </div>
+    <button class="sidebar-toggle">☰</button>
+    <!-- Navigation Bar -->
+    <?php require_once 'layouts/navbar.php'; ?>
 
     <!--------- Website Message ------------>
     <?php if(isset($_GET['error'])){ ?>
@@ -1049,44 +1007,7 @@ include('server/getlogout.php');
     <?php } ?>
 
     <div class="dashboard-container">
-        <aside class="sidebar"><br><br><br>
-            <div class="user-info">
-                <div class="user-avatar">
-                    JD
-                </div>
-                <h3>John Doe</h3>
-                <p>Patient ID: #12345</p>
-            </div>
-            <nav>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="dashboard.php" class="nav-link active">
-                            <i>📊</i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i>📋</i> Diagnosis History
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i>📝</i> Health Records
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i>⚙️</i> Settings
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="dashboard.php?logout=1" class="nav-link">
-                            <i>🚪</i> Logout
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
+        <?php require_once 'layouts/sidebar.php'; ?>
 
         <main class="main-content">
             <div class="dashboard-grid">
@@ -1215,67 +1136,15 @@ include('server/getlogout.php');
     </div>
 
     <script>
-        // Sidebar toggle functionality
-        const sidebarToggle = document.querySelector('.sidebar-toggle');
-        const sidebar = document.querySelector('.sidebar');
-
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 600) {
-                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                }
-            }
-        });
-
         // Handle window resize
         window.addEventListener('resize', () => {
             if (window.innerWidth > 600) {
                 sidebar.classList.remove('active');
             }
         });
-
-        // mobile navigation
-        const mobileNavToggle = document.querySelector('.hamburger-menu');
-        const mobileNav = document.querySelector('.mobile-nav');
-        const mobileNavClose = document.querySelector('.mobile-nav-close');
-
-        mobileNavToggle.addEventListener('click', () => {
-            mobileNavToggle.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
-        });
-
-        // Close mobile nav with close button
-        if (mobileNavClose) {
-            mobileNavClose.addEventListener('click', () => {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        }
-
-        // Close mobile nav when clicking a link
-        document.querySelectorAll('.mobile-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-
-        // Close mobile nav when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileNav.contains(e.target) && !mobileNavToggle.contains(e.target)) {
-                mobileNavToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
     </script>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
 </body>
 </html>

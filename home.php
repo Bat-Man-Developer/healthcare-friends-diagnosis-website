@@ -807,7 +807,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
 
     <p>Your trusted partner in understanding your health concerns</p>
 
-    <?php if(!isset($_SESSION['loggedin'])): ?>
+    <?php if(!isset($_SESSION['logged_in'])): ?>
 
     <div class="hero-buttons">
 
@@ -832,21 +832,30 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
             <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-stethoscope"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                        </svg>
                     </div>
                     <h3>Symptom Analysis</h3>
                     <p>Advanced analysis of your symptoms using our comprehensive medical database.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-heartbeat"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
                     </div>
                     <h3>Health Tracking</h3>
                     <p>Monitor your health patterns and maintain a personal health record.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-user-md"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
                     </div>
                     <h3>Expert Guidance</h3>
                     <p>Get preliminary health insights based on your symptoms.</p>
@@ -861,28 +870,39 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
             <div class="benefits-grid">
                 <div class="benefit-item">
                     <div class="feature-icon">
-                        <i class="fas fa-check-circle"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
                     </div>
                     <h3>Accurate Results</h3>
                     <p>Our diagnosis system is powered by advanced algorithms and up-to-date medical knowledge.</p>
                 </div>
                 <div class="benefit-item">
                     <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+                            <path d="M12 18h.01"/>
+                        </svg>
                     </div>
                     <h3>Easy to Use</h3>
                     <p>Simple and intuitive interface designed for users of all ages.</p>
                 </div>
                 <div class="benefit-item">
                     <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
                     </div>
                     <h3>Privacy First</h3>
                     <p>Your health data is secure and protected with state-of-the-art encryption.</p>
                 </div>
                 <div class="benefit-item">
                     <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
                     </div>
                     <h3>24/7 Available</h3>
                     <p>Access our services anytime, anywhere, from any device.</p>
@@ -895,33 +915,13 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
         <div class="container">
             <h2>Ready to Take Control of Your Health?</h2>
             <p>Join thousands of users who trust our platform for their health concerns.</p>
-            <a href="register.php" class="btn btn-primary">Start Your Journey</a>
+            <a href="registration.php" class="btn btn-primary">Start Your Journey</a>
         </div>
     </section>
     </main>
 
     <!-- footer.php -->
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">About</a></li>
-                    <li><a href="diagnosis.php">Diagnosis</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p>Email: info@healthcare.com</p>
-                <p>Phone: +27 (78) 123-4567</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 HealthCare Diagnosis. All rights reserved.</p>
-        </div>
-    </footer>
+    <?php require_once 'layouts/footer.php'; ?>
 
     <!-- Main JS -->
     <script src="js/main.js"></script>

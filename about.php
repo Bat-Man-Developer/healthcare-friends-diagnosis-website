@@ -781,22 +781,22 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
 
     <section class="team-section">
         <div class="about-content">
-            <h2 class="section-title">Our Leadership Team</h2>
+            <h2 class="section-title">Our Developer Team</h2>
             <div class="team-grid">
                 <div class="team-member">
-                    <div class="member-image">Dr</div>
-                    <h3>Dr. Sarah Johnson</h3>
-                    <p>Chief Medical Officer</p>
+                    <div class="member-image">K</div>
+                    <h3>Kay Mudau</h3>
+                    <p>Senior AI Web Developer</p>
                 </div>
                 <div class="team-member">
-                    <div class="member-image">T</div>
-                    <h3>Tom Anderson</h3>
-                    <p>Technical Director</p>
+                    <div class="member-image">H</div>
+                    <h3>Hulisani Tshishonga</h3>
+                    <p>Senior AI Software Developer</p>
                 </div>
                 <div class="team-member">
-                    <div class="member-image">E</div>
-                    <h3>Emma Williams</h3>
-                    <p>Head of Research</p>
+                    <div class="member-image">R</div>
+                    <h3>Remember Nyalungu</h3>
+                    <p>AI Software Developer Intern</p>
                 </div>
             </div>
         </div>
@@ -839,26 +839,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
     </section>
 
     <!-- footer.php -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">About</a></li>
-                    <li><a href="diagnosis.php">Diagnosis</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p>Email: info@healthcare.com</p>
-                <p>Phone: +27 (78) 123-4567</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 HealthCare Diagnosis. All rights reserved.</p>
-        </div>
-    </footer>
+    <?php require_once 'layouts/footer.php'; ?>
 
     <script>
         // Animate stats counter
